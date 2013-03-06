@@ -8,6 +8,7 @@
 		<meta name="author" content="">
 
 		<meta name="viewport" content="initial-scale = 1.0">
+        <link href='http://fonts.googleapis.com/css?family=Marcellus+SC' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="${resource(dir: 'css', file: 'customBootstrap.css')}" type="text/css">
 
 		<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -37,15 +38,17 @@
 						<span class="icon-bar"></span>
 					</a>
 					
-					<a class="brand" href="${createLink(uri: '/')}">Grails Twitter Bootstrap</a>
+					<a class="brand" href="${createLink(uri: '/')}">Lexington Board Gamers</a>
 
 					<div class="nav-collapse">
 						<ul class="nav">							
 							<li<%= request.forwardURI == "${createLink(uri: '/')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/')}">Home</a></li>
-							<g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
-								<li<%= c.logicalPropertyName == controllerName ? ' class="active"' : '' %>><g:link controller="${c.logicalPropertyName}">${c.naturalName}</g:link></li>
-							</g:each>
 						</ul>
+                        <form class="navbar-form pull-right">
+                            <input class="span2" type="text" placeholder="Email">
+                            <input class="span2" type="password" placeholder="Password">
+                            <button class="btn btn-primary" type="submit">Sign in</button>
+                        </form>
 					</div>
 				</div>
 			</div>
