@@ -73,8 +73,8 @@ grails-app/views/_fields/default/_field.gsp</pre>
 					</div>
 					
 					<div class="span4">
-						<h2>Fork It</h2>
-						<p>You can download, fork &amp; raise issues on this project on <a href="https://github.com/robfletcher/twitter-bootstrap-scaffolding">GitHub</a>.</p>
+						<h2>Project Location</h2>
+						<p>You can find this project on <a href="https://github.com/msrust0/bangbangbang">GitHub</a>.</p>
 					</div>
 
 				</div>
