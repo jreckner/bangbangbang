@@ -46,7 +46,7 @@ class RegistrationController {
                     def authToken = new UsernamePasswordToken(user.username, params.password)
                     SecurityUtils.subject.login(authToken)
 
-                    redirect(controller: 'home', action: 'secured')
+                    redirect(uri: "/")
                 }
                 else {
 
