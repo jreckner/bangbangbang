@@ -32,13 +32,25 @@
 			<section id="main" class="span12">
 
 				<div class="hero-unit">
-					<h1><img src="images/shield.png">Lexington Board Gamers</h1>
+                    <div class="span8" style="background: url(images/shield.png) no-repeat;padding-left: 150px">
+                        %{--<img src="images/shield.png">--}%
+                        <h1>Game On.</h1>
+                        <h3>Roll it, shuffle it, deal it.</h3>
 
-					<p>Track your games and what your buddies are playing.</p>
-					
+                    </div>
+                    <div class="span4">
+                        <ul>
+                            <li style="list-style-type:none !important;"><i class="icon-th-list icon-white"></i>Track your games.</li>
+                            <li style="list-style-type:none !important;"><i class="icon-user icon-white"></i>See what your buddies are playing.</li>
+                            <li style="list-style-type:none !important;"><i class="icon-thumbs-up icon-white"></i>Write and share reviews.</li>
+                            <li style="list-style-type:none !important;"><i class="icon-search icon-white"></i>Find a game in your area.</li>
+                            <li style="list-style-type:none !important;"><i class="icon-comment icon-white"></i>Join a game discussion.</li>
+                        </ul>
+                    </div>
+
 				</div>
-					
-				<div class="row-fluid row-padding">
+
+				<div class="row-fluid">
 					
 					<div class="span4" style="padding-left: 20px;">
 						<h2>Try It</h2>

@@ -7,10 +7,10 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 
-		<meta name="viewport" content="initial-scale = 1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href='http://fonts.googleapis.com/css?family=Marcellus+SC' rel='stylesheet' type='text/css'>
-        <link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="${resource(dir: 'css', file: 'customBootstrap.css')}" type="text/css">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,600,700' rel='stylesheet' type='text/css'>
+        %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'customBootstrap.css')}" type="text/css">--}%
 
 		<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
 		<!--[if lt IE 9]>
@@ -32,16 +32,16 @@
 		<nav class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container-fluid">
-					
+
 					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</a>
-					
+
 					<a class="brand" href="${createLink(uri: '/')}">Lexington Board Gamers</a>
 
-					<div class="nav-collapse">
+					<div class="nav-collapse collapse">
 
                         <shiro:authenticated>
                             <p class="navbar-text pull-right" id="loginInfo">
@@ -63,7 +63,7 @@
                             </form>
                         </shiro:notAuthenticated>
 
-						<ul class="nav">							
+						<ul class="nav">
 							<li<%= request.forwardURI == "${createLink(uri: '/')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/')}">Home</a></li>
                             <li<%= request.forwardURI == "${createLink(uri: '/forums')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/')}">Forums</a></li>
                             <li<%= request.forwardURI == "${createLink(uri: '/about')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/')}">About</a></li>
