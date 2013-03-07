@@ -41,14 +41,27 @@
 					<a class="brand" href="${createLink(uri: '/')}">Lexington Board Gamers</a>
 
 					<div class="nav-collapse">
+
+                        <shiro:authenticated>
+                            <p class="navbar-text pull-right" id="loginInfo">
+                                <span style="padding: 10px 15px;">
+                                    Logged in as
+                                    <a class="navbar-link" href="#"><shiro:principal/></a>
+                                </span>
+                                <a class="navbar-link" href="${createLink(uri: '/auth/signOut')}">Sign out</a>
+                            </p>
+                        </shiro:authenticated>
+                        <shiro:notAuthenticated>
+                            <form action="auth/signIn" class="form-signin navbar-form pull-right">
+                                <input class="span2" type="text" name="username" placeholder="Email">
+                                <input class="span2" type="password" name="password" placeholder="Password">
+                                <button class="btn btn-primary" type="submit">Sign in</button>
+                            </form>
+                        </shiro:notAuthenticated>
+
 						<ul class="nav">							
 							<li<%= request.forwardURI == "${createLink(uri: '/')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/')}">Home</a></li>
 						</ul>
-                        <form class="navbar-form pull-right">
-                            <input class="span2" type="text" placeholder="Email">
-                            <input class="span2" type="password" placeholder="Password">
-                            <button class="btn btn-primary" type="submit">Sign in</button>
-                        </form>
 					</div>
 				</div>
 			</div>
@@ -60,7 +73,7 @@
 			<hr>
 
 			<footer>
-				<p>&copy; Company 2011</p>
+				<p>&copy; Wireblend 2013</p>
 			</footer>
 		</div>
 

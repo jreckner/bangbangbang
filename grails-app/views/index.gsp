@@ -32,16 +32,10 @@
 			<section id="main" class="span9">
 
 				<div class="hero-unit">
-					<h1>Welcome to Grails</h1>
+					<h1>Lexington Board Gamers</h1>
 
-					<p>Grails scaffolding with a <a href="http://twitter.github.com/bootstrap" rel="external"><em>Twitter
-					Bootstrap</em></a> look &amp; feel?</p>
+					<p>Track your games and what your buddies are playing.</p>
 					
-					<p>This is a demo of how to reskin Grails dynamic scaffolding pages. I've
-					used The <a href="http://freeside.co/grails-fields">Fields plugin</a> for customizing
-					form rendering and the <a href="https://github.com/groovydev/twitter-bootstrap-grails-plugin">Twitter
-					Bootstrap Resources plugin</a> to provide the CSS resources. Beyond that it&apos;s a
-					bare Grails app using dynamically scaffolded controllers and views.</p>
 				</div>
 					
 				<div class="row-fluid">

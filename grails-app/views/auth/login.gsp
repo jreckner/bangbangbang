@@ -1,35 +1,35 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta name="layout" content="main" />
+  <meta name="layout" content="bootstrap"/>
+  %{--<meta name="layout" content="main" />--}%
   <title>Login</title>
+  <link rel="stylesheet" href="${resource(dir: 'css', file: 'login.css')}" type="text/css">
 </head>
 <body>
   <g:if test="${flash.message}">
     <div class="message">${flash.message}</div>
   </g:if>
-  <g:form action="signIn">
-    <input type="hidden" name="targetUri" value="${targetUri}" />
-    <table>
-      <tbody>
-        <tr>
-          <td>Username:</td>
-          <td><input type="text" name="username" value="${username}" /></td>
-        </tr>
-        <tr>
-          <td>Password:</td>
-          <td><input type="password" name="password" value="" /></td>
-        </tr>
-        <tr>
-          <td>Remember me?:</td>
-          <td><g:checkBox name="rememberMe" value="${rememberMe}" /></td>
-        </tr>
-        <tr>
-          <td />
-          <td><input type="submit" value="Sign in" /></td>
-        </tr>
-      </tbody>
-    </table>
-  </g:form>
+<g:form action="signIn" class="form-signin">
+
+    <div class="row-fluid">
+
+        <section id="main" class="span4">
+
+            <div class="hero-unit">
+                <h2 class="form-signin-heading">Please sign in</h2>
+                <input type="hidden" name="targetUri" value="${targetUri}" />
+                <input type="text" name="username" value="${username}" class="input-block-level"  placeholder="Username"/>
+                <input type="password" name="password" value="" class="input-block-level" placeholder="Password" />
+                <label class="checkbox">
+                    <g:checkBox name="rememberMe" value="${rememberMe}" /> Remember me
+                </label>
+
+                <button class="btn btn-primary" type="submit">Sign in</button>
+            </div>
+        </section>
+    </div>
+
+</g:form>
 </body>
 </html>
