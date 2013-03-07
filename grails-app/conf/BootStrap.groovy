@@ -15,7 +15,7 @@ class BootStrap {
             new Role(name: 'ROLE_USER').save(flush: true, failOnError: true)
 
         // Create an admin user
-        def adminUser = new User(username: "bang", passwordHash: new Sha256Hash("bang").toHex())
+        def adminUser = new User(username: "bang@noreply.com", passwordHash: new Sha256Hash("bang").toHex())
         adminUser.addToPermissions("*:*")
         adminUser.save()
 

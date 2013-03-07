@@ -6,6 +6,8 @@ import org.apache.shiro.SecurityUtils
 class RegistrationController {
     def shiroSecurityService
 
+    static defaultAction = "index"
+
     def index() {
         User user = new User()
         [user: user]
