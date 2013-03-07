@@ -40,7 +40,7 @@
 					
 				<div class="row-fluid row-padding">
 					
-					<div class="span4">
+					<div class="span4" style="padding-left: 20px;">
 						<h2>Try It</h2>
 						<p>This demo app includes a couple of controllers to show off its features.</p>
 						<ul class="nav nav-list">
