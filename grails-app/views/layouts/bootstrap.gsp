@@ -52,7 +52,10 @@
                             </p>
                         </shiro:authenticated>
                         <shiro:notAuthenticated>
-                            <form action="auth/signIn" class="form-signin navbar-form pull-right">
+                            <p class="navbar-text pull-right" id="registerLink">
+                                <a class="navbar-link" href="${createLink(uri: '/registration/index')}">Register</a>
+                            </p>
+                            <form action="${createLink(uri: '/auth/signIn')}" class="form-signin navbar-form pull-right">
                                 <input class="span2" type="text" name="username" placeholder="Email">
                                 <input class="span2" type="password" name="password" placeholder="Password">
                                 <button class="btn btn-primary" type="submit">Sign in</button>
