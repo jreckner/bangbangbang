@@ -9,7 +9,6 @@
 
 <body>
 
-%{--<h1>Signup</h1>--}%
 
 <g:if test="${flash.message}">
     <div class="alert alert-info">${flash.message}</div>
@@ -39,24 +38,6 @@
         </section>
     </div>
 
-    %{--<p>--}%
-        %{--<label for="username">Email</label>--}%
-        %{--<g:textField name="username" value="${user.username}"/>--}%
-    %{--</p>--}%
-
-    %{--<p>--}%
-        %{--<label for="password">Password</label>--}%
-        %{--<g:passwordField name="password" value=""/>--}%
-    %{--</p>--}%
-
-    %{--<p>--}%
-        %{--<label for="password">Confirm Password</label>--}%
-        %{--<g:passwordField name="password2" value=""/>--}%
-    %{--</p>--}%
-
-    %{--<p>--}%
-        %{--<g:submitButton name="submit" value="Submit"/>--}%
-    %{--</p>--}%
 </g:form>
 
 </body>

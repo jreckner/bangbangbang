@@ -9,6 +9,7 @@
 
 		<meta name="viewport" content="initial-scale = 1.0">
         <link href='http://fonts.googleapis.com/css?family=Marcellus+SC' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="${resource(dir: 'css', file: 'customBootstrap.css')}" type="text/css">
 
 		<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -53,7 +54,7 @@
                         </shiro:authenticated>
                         <shiro:notAuthenticated>
                             <p class="navbar-text pull-right" id="registerLink">
-                                <a class="navbar-link" href="${createLink(uri: '/registration/index')}">Register</a>
+                                <a class="navbar-link" href="${createLink(uri: '/registration')}">Register</a>
                             </p>
                             <form action="${createLink(uri: '/auth/signIn')}" class="form-signin navbar-form pull-right">
                                 <input class="span2" type="text" name="username" placeholder="Email">
@@ -64,13 +65,15 @@
 
 						<ul class="nav">							
 							<li<%= request.forwardURI == "${createLink(uri: '/')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/')}">Home</a></li>
+                            <li<%= request.forwardURI == "${createLink(uri: '/forums')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/')}">Forums</a></li>
+                            <li<%= request.forwardURI == "${createLink(uri: '/about')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/')}">About</a></li>
 						</ul>
 					</div>
 				</div>
 			</div>
 		</nav>
 
-		<div class="container-fluid">
+		<div class="container-fluid container-full">
 			<g:layoutBody/>
 
 			<hr>
