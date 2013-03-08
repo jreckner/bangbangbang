@@ -63,5 +63,7 @@ grails.project.dependency.resolution = {
         compile ':cache:1.0.1'
         compile ":shiro:1.1.4"
         compile ":lesscss-resources:1.3.1"
+
+        //compile ":mail:1.0.1"
     }
 }

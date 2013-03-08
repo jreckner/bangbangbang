@@ -8,6 +8,7 @@ class UrlMappings {
 		}
 
         "/registration"(controller:"registration", action: "index")
+        "/registration/activate/$activationKey?"(controller: "registration", action: "activate")
 
 		"/"(view:"/index")
 		"500"(view:'/error')

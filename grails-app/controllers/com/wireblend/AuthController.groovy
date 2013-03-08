@@ -34,21 +34,11 @@ class AuthController {
             targetUri = savedRequest.requestURI - request.contextPath
             if (savedRequest.queryString) targetUri = targetUri + '?' + savedRequest.queryString
         }
-        
-        try{
-            // Perform the actual login. An AuthenticationException
-            // will be thrown if the username is unrecognised or the
-            // password is incorrect.
-            SecurityUtils.subject.login(authToken)
 
-            log.info "Redirecting to '${targetUri}'."
-            redirect(uri: targetUri)
-        }
-        catch (AuthenticationException ex){
-            // Authentication failed, so display the appropriate message
-            // on the login page.
-            log.info "Authentication failure for user '${params.username}'."
-            flash.message = message(code: "login.failed")
+        //Find out if this userId is locked before allowing any login.
+        def user = User.findByUsername(params.username)
+        if (user && user.locked) {
+            flash.message = message(code: "useraccount is locked.")
 
             // Keep the username and "remember me" setting so that the
             // user doesn't have to enter them again.
@@ -64,6 +54,39 @@ class AuthController {
 
             // Now redirect back to the login page.
             redirect(action: "login", params: m)
+        }
+        else
+        {
+            try{
+                // Perform the actual login. An AuthenticationException
+                // will be thrown if the username is unrecognised or the
+                // password is incorrect.
+                SecurityUtils.subject.login(authToken)
+
+                log.info "Redirecting to '${targetUri}'."
+                redirect(uri: targetUri)
+            }
+            catch (AuthenticationException ex){
+                // Authentication failed, so display the appropriate message
+                // on the login page.
+                log.info "Authentication failure for user '${params.username}'."
+                flash.message = message(code: "login.failed")
+
+                // Keep the username and "remember me" setting so that the
+                // user doesn't have to enter them again.
+                def m = [ username: params.username ]
+                if (params.rememberMe) {
+                    m["rememberMe"] = true
+                }
+
+                // Remember the target URI too.
+                if (params.targetUri) {
+                    m["targetUri"] = params.targetUri
+                }
+
+                // Now redirect back to the login page.
+                redirect(action: "login", params: m)
+            }
         }
     }
 

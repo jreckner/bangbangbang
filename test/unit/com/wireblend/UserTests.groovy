@@ -8,7 +8,10 @@ import grails.test.GrailsUnitTestCase
 class UserTests {
 
     void test_CreateUser() {
-        def user = new User(username: 'jon.reckner@gmail.com', passwordHash: new Sha256Hash("Password1").toHex())
+        def user = new User(
+                username: 'jon.reckner@gmail.com',
+                passwordHash: new Sha256Hash("Password1").toHex(),
+                activationKey: UUID.randomUUID() as String)
         user.addToPermissions("*:*")
         user.save()
 
