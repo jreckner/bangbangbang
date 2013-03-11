@@ -24,16 +24,28 @@
 
     <div class="row-fluid">
 
-        <section id="main" class="span4">
+        <section id="main" class="span12">
 
             <div class="hero-unit">
-                <h2 class="form-signin-heading">Signup</h2>
 
-                <input type="text" name="username" value="${username}" class="input-block-level"  placeholder="Email"/>
-                <input type="password" name="password" value="" class="input-block-level" placeholder="Password" />
-                <input type="password" name="password2" value="" class="input-block-level" placeholder="Confirm Password" />
-
-                <button class="btn btn-primary" type="submit">Register</button>
+                <div class="span4">
+                    <h2 class="form-signin-heading">Signup</h2>
+                    <input type="text" name="username" value="${username}" class="input-block-level"  placeholder="Email"/>
+                    <input type="password" name="password" value="" class="input-block-level" placeholder="Password" />
+                    <input type="password" name="password2" value="" class="input-block-level" placeholder="Confirm Password" />
+                    <button class="btn btn-primary" type="submit">Register</button>
+                </div>
+                <div class="span2">
+                    <p>
+                        &nbsp;
+                    </p>
+                </div>
+                <div class="span6">
+                    <p>
+                        Welcome!<br/>
+                        You will be emailed a link to activate your account.
+                    </p>
+                </div>
             </div>
         </section>
     </div>

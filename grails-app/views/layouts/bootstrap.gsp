@@ -39,7 +39,7 @@
 						<span class="icon-bar"></span>
 					</a>
 
-					<a class="brand" href="${createLink(uri: '/')}">Lexington Board Gamers</a>
+					<a class="brand" href="${createLink(uri: '/')}">Title Here</a>
 
 					<div class="nav-collapse collapse">
 
@@ -66,7 +66,7 @@
 						<ul class="nav">
 							<li<%= request.forwardURI == "${createLink(uri: '/')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/')}">Home</a></li>
                             <li<%= request.forwardURI == "${createLink(uri: '/forums')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/')}">Forums</a></li>
-                            <li<%= request.forwardURI == "${createLink(uri: '/about')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/')}">About</a></li>
+                            <li<%= request.forwardURI == "${createLink(uri: '/about')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/about')}">About</a></li>
 						</ul>
 					</div>
 				</div>
