@@ -1,0 +1,19 @@
+package com.wireblend
+
+class BoardGame {
+
+    String objectId
+    String name
+    Integer yearPublished = 0
+    Integer minPlayers = 0
+    Integer maxPlayers = 0
+    Integer playingTime = 0
+    Integer age = 0
+    String description
+    String thumbnail
+    String image
+
+    static constraints = {
+        objectId(nullable: false, unique: true)
+    }
+}

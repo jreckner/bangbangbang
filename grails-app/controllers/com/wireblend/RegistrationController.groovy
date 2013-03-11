@@ -1,11 +1,11 @@
 package com.wireblend
 
-import org.apache.shiro.authc.UsernamePasswordToken
-import org.apache.shiro.SecurityUtils
-import org.hibernate.connection.UserSuppliedConnectionProvider
-
 class RegistrationController {
-    def shiroSecurityService
+
+
+    def registrationService
+
+    def userService
 
     static defaultAction = "index"
 
@@ -15,11 +15,10 @@ class RegistrationController {
     }
 
     def activate = {
-        def user = User.findByActivationKey(params.activationKey)
-        if (user) {
-            user.locked = false
-            user.save()
+        if(registrationService.activate(params.activationKey))
+        {
             flash.message = message(code: "useraccount is activated and unlocked.")
+            //TODO: redirect to an activation succeeded page
         }
         else
         {
@@ -33,7 +32,7 @@ class RegistrationController {
     def register() {
 
         // Check to see if the username already exists
-        def user = User.findByUsername(params.username)
+        def user = userService.getUser(params.username)
         if (user) {
             flash.message = "User already exists with the username '${params.username}'"
             render('index')
@@ -51,24 +50,12 @@ class RegistrationController {
             // Passwords match. Let's attempt to save the user
             else {
                 // Create user
-                def activationKey = UUID.randomUUID() as String
-                user = new User(
-                        username: params.username,
-                        passwordHash: shiroSecurityService.encodePassword(params.password),
-                        locked: true,
-                        activationKey: activationKey
-                )
+                def activationKey = registrationService.getNewActivationKey()
+                if (userService.createLockedUser(params.username, params.password, activationKey)) {
 
-                if (user.save()) {
-
-                    // Add USER role to new user
-                    user.addToRoles(Role.findByName('ROLE_USER'))
-
-                    sendMail {
-                        to params.username
-                        subject "Board Games Central Activation Notification"
-                        html '<a href="' + createLink(uri: '/', absolute: true) + 'registration/activate/' + activationKey + '">Click Here to activate your Board Games Central account.</a>'
-                    }
+                    // TODO replace this link with gsp template for pretty email
+                    def link = '<a href="' + createLink(uri: '/', absolute: true) + 'registration/activate/' + activationKey + '">Click Here to activate your Board Games Central account.</a>'
+                    registrationService.sendActivationEmail(params.username, activationKey, link)
 
                     // Login user
                     //def authToken = new UsernamePasswordToken(user.username, params.password)

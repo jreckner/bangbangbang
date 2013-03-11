@@ -9,12 +9,11 @@ class UserTests {
 
     void test_CreateUser() {
         def user = new User(
-                username: 'jon.reckner@gmail.com',
+                username: 'test@gmail.com',
                 passwordHash: new Sha256Hash("Password1").toHex(),
                 activationKey: UUID.randomUUID() as String)
-        user.addToPermissions("*:*")
         user.save()
 
-        assert User.findByUsername('jon.reckner@gmail.com')
+        assert User.findByUsername('test@gmail.com')
     }
 }

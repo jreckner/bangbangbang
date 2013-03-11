@@ -67,6 +67,26 @@ environments {
         grails.logging.jul.usebridge = false
         // TODO: grails.serverURL = "http://www.changeme.com"
     }
+    test {
+        log4j = {
+            appenders {
+                file name: 'grailsfile', file: 'target/grails.log'
+                file name: 'rootlog', file: 'target/root.log'
+                file name: 'testfile', file: 'target/test.log',
+                        layout: pattern(conversionPattern: "[%d{HH:mm:ss:SSS}] %-5p %c{2}: %m%n")
+            }
+            root { error 'stdout', 'rootlog' }
+            info additivity: false, grailsfile: 'org.codehaus.groovy.grails.commons'
+            all additivity: false, testfile: [
+                    'grails.app.controllers.com.wireblend',
+                    'grails.app.domain.com.wireblend',
+                    'grails.app.services.com.wireblend',
+                    'grails.app.taglib.com.wireblend',
+                    'grails.app.conf.com.wireblend',
+                    'grails.app.filters.com.wireblend'
+            ]
+        }
+    }
 }
 
 // log4j configuration
