@@ -42,10 +42,14 @@ grails.project.dependency.resolution = {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
 
         // runtime 'mysql:mysql-connector-java:5.1.20'
+        //compile "org.apache.shiro:shiro-core:1.2.1"
+        //compile "org.apache.shiro:shiro-web:1.2.1"
+        //compile "org.apache.shiro:shiro-spring:1.2.1"
 
         // workaround for code-coverage breakage in Grails 2.2.x
         // ref: https://jira.grails.org/browse/GPCODECOVERAGE-50
         test 'net.sourceforge.cobertura:cobertura:1.9.4.1'
+        test 'org.easymock:easymock:3.1'
     }
 
     plugins {

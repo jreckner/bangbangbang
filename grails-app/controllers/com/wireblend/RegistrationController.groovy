@@ -2,7 +2,6 @@ package com.wireblend
 
 class RegistrationController {
 
-
     def registrationService
 
     def userService
@@ -17,12 +16,14 @@ class RegistrationController {
     def activate = {
         if(registrationService.activate(params.activationKey))
         {
-            flash.message = message(code: "useraccount is activated and unlocked.")
+            //flash.message = message(code: "useraccount is activated and unlocked.")
+            log.debug("useraccount is activated and unlocked.")
             //TODO: redirect to an activation succeeded page
         }
         else
         {
-            flash.message = message(code: "unable to find useraccount for activation.")
+            //flash.message = message(code: "unable to find useraccount for activation.")
+            log.debug("unable to find useraccount for activation.")
             //TODO: redirect to an activation failed page
         }
         // Now redirect back to the login page.

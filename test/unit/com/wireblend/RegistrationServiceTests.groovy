@@ -23,6 +23,9 @@ class RegistrationServiceTests {
                 passwordHash: new Sha256Hash("Password1").toHex(),
                 activationKey: activationKey)
         user.save(flush: true, failonerror: true)
+
+        def mockedMailService = [sendMail: { return null }]
+        service.mailService = mockedMailService
     }
 
     void test_Activate() {
@@ -35,5 +38,9 @@ class RegistrationServiceTests {
 
     void test_GetNewActivationKey() {
         assert service.getNewActivationKey().length().equals(36)
+    }
+
+    void test_SendActivationEmail() {
+        service.sendActivationEmail('trash@example.com', activationKey, 'FAKEHTMLURLLink')
     }
 }
