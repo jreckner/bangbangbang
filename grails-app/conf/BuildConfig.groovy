@@ -76,3 +76,14 @@ grails.project.dependency.resolution = {
 	    test ":code-coverage:1.2.5"
     }
 }
+
+coverage {
+    enabledByDefault = true
+    nopost = false
+    xml = false
+    exclusions = ["**/taglib/**",
+            "**/twitter/bootstrap/scaffolding/**",
+            "**/com/wireblend/DbRealm*",
+            "**/com/wireblend/SecurityFilters*",
+            "**/com/wireblend/AuthController*"]
+}

@@ -123,13 +123,6 @@ grails {
     }
 }
 
-coverage {
-    nopost = false
-    xml = true
-    exclusions = ["**/DbRealm*", "**/SecurityFilter*"]
-    enabledByDefault = true
-}
-
 grails.plugins.twitterbootstrap.fixtaglib = true
 grails.plugins.twitterbootstrap.defaultBundle = false
 
