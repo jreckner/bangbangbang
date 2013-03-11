@@ -42,6 +42,10 @@ grails.project.dependency.resolution = {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
 
         // runtime 'mysql:mysql-connector-java:5.1.20'
+
+        // workaround for code-coverage breakage in Grails 2.2.x
+        // ref: https://jira.grails.org/browse/GPCODECOVERAGE-50
+        test 'net.sourceforge.cobertura:cobertura:1.9.4.1'
     }
 
     plugins {
@@ -64,6 +68,7 @@ grails.project.dependency.resolution = {
         compile ":shiro:1.1.4"
         compile ":lesscss-resources:1.3.1"
 
-        //compile ":mail:1.0.1"
+        compile ":mail:1.0.1"
+	    test ":code-coverage:1.2.5"
     }
 }
