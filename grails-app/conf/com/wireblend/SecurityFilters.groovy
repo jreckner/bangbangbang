@@ -12,7 +12,7 @@ class SecurityFilters {
      * encompasses all actions within the controller.
      */
     static nonAuthenticatedActions = [
-            [controller: 'home', action: 'index']
+            [controller: 'registration', action: '*']
     ]
 
     /**
@@ -21,8 +21,8 @@ class SecurityFilters {
      * against.
      */
     static authenticatedActions = [
-            [controller: 'home', action: 'secured', roles: ['ROLE_ADMIN', 'ROLE_USER']],
-            [controller: 'home', action: 'admin', roles: ['ROLE_ADMIN']]
+            [controller: 'boardGame', action: '*', roles: ['ROLE_ADMIN', 'ROLE_USER']],
+            [controller: 'user', action: '*', roles: ['ROLE_ADMIN']]
     ]
 
     def filters = {
