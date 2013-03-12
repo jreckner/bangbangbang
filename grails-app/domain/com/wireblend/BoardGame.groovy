@@ -19,4 +19,8 @@ class BoardGame {
     static constraints = {
         objectId(nullable: false, unique: true)
     }
+
+    String toString() {
+        "$name - $yearPublished"
+    }
 }
