@@ -71,6 +71,21 @@ class BoardGameServiceTests {
     }
 
     void test_AddToUserCollection() {
-        //def boardGame = service.addToUserCollection('test1@gmail.com', testBoardGame)
+        service.addToUserCollection('test1@gmail.com', testBoardGame)
+        assert user.boardGames.size().equals(1)
+    }
+
+    void test_AddToUserCollectionByUsername() {
+        service.addToUserCollection(user.username, testBoardGame)
+        assert user.boardGames.size().equals(1)
+    }
+
+    void test_AddToUserCollectionByUser() {
+        service.addToUserCollection(user, testBoardGame)
+        assert user.boardGames.size().equals(1)
+    }
+
+    void test_AddToUserCollectionByUserInvalid() {
+        service.addToUserCollection('fakeUserName', testBoardGame)
     }
 }

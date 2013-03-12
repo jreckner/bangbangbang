@@ -24,9 +24,9 @@ class RegistrationController {
             log.debug("useraccount is activated and unlocked.")
             // redirect(uri: "/registration/activationComplete")
 
-            // Keep the username and "remember me" setting so that the
-            // user doesn't have to enter them again.
-            def m = [ username: params.username ]
+            // Keep the username so that the
+            // user doesn't have to enter it again.
+            // def m = [ username: params.username ]
             // Now redirect back to the login page.
             // redirect(action: "activationComplete", params: m)
             redirect(action: "activationComplete")
@@ -34,7 +34,7 @@ class RegistrationController {
         else
         {
             log.debug("unable to find useraccount for activation.")
-            flash.message = message(code: "unable to find useraccount for activation.")
+            flash.message = "unable to find username '${params.username}' for activation."
             redirect(action: "registrationFailure")
         }
     }
@@ -60,7 +60,7 @@ class RegistrationController {
             // Make sure the passwords match
             if (params.password != params.password2) {
                 flash.message = "Passwords do not match"
-                redirect(action: "registrationComplete")
+                redirect(action: "registrationFailure")
             }
 
             // Passwords match. Let's attempt to save the user
@@ -84,7 +84,7 @@ class RegistrationController {
                     //TODO: redirect to an registration failed page
 
                     // Now redirect back to the login page.
-                    redirect(uri: "registrationFailure")
+                    redirect(action: "registrationFailure")
                 }
             }
         }

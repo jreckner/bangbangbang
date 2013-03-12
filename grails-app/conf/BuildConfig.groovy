@@ -81,9 +81,12 @@ coverage {
     enabledByDefault = true
     nopost = false
     xml = false
-    exclusions = ["**/taglib/**",
+    exclusions = [
+            "**/com/wireblend/Abstract*",
+            "**/taglib/**",
             "**/twitter/bootstrap/scaffolding/**",
             "**/com/wireblend/DbRealm*",
             "**/com/wireblend/SecurityFilters*",
-            "**/com/wireblend/AuthController*"]
+            "**/com/wireblend/AuthController*"
+    ]
 }

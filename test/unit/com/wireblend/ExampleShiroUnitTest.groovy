@@ -26,6 +26,7 @@ public class ExampleShiroUnitTest extends AbstractShiroTest {
         //SecurityUtils.getSubject() directly (or nested in the
         //call stack) will work properly.
         assert SecurityUtils.getSubject()
+        assert getSubject()
     }
 
     @After

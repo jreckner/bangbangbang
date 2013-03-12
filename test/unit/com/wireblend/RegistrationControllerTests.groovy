@@ -42,6 +42,18 @@ class RegistrationControllerTests{
         controller.index()
     }
 
+    void test_ActivationCompleteRedirect() {
+        controller.activationComplete()
+    }
+
+    void test_registrationCompleteRedirect() {
+        controller.registrationComplete()
+    }
+
+    void test_registrationFailureRedirect() {
+        controller.registrationFailure()
+    }
+
     void test_Activate() {
         params.activationKey = UUID.randomUUID()
         controller.activate()
@@ -62,6 +74,7 @@ class RegistrationControllerTests{
         params.password = 'matchThis'
         params.password2 = 'matchThis'
         controller.register()
+        assert response.redirectedUrl == '/registration/registrationComplete'
     }
 
     void test_RegisterPasswordMismatch() {
@@ -69,6 +82,7 @@ class RegistrationControllerTests{
         params.password = 'matchThis'
         params.password2 = 'mismatched'
         controller.register()
+        assert response.redirectedUrl == '/registration/registrationFailure'
     }
 
     void test_RegisterExistingUser() {
@@ -81,6 +95,7 @@ class RegistrationControllerTests{
         params.password = 'matchThis'
         params.password2 = 'matchThis'
         controller.register()
+        assert response.redirectedUrl == '/registration/registrationFailure'
     }
 
     void test_RegisterUnableToCreateLockedUser() {
@@ -94,5 +109,6 @@ class RegistrationControllerTests{
         params.password = 'matchThis'
         params.password2 = 'matchThis'
         controller.register()
+        assert response.redirectedUrl == '/registration/registrationFailure'
     }
 }

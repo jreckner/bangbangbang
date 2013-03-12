@@ -1,7 +1,8 @@
 package com.wireblend
 
+import grails.plugin.mail.MailService
 
-
+import static grails.test.MockUtils.*
 import grails.test.mixin.*
 import org.apache.shiro.crypto.hash.Sha256Hash
 import java.util.UUID
@@ -10,7 +11,7 @@ import java.util.UUID
  * See the API for {@link grails.test.mixin.services.ServiceUnitTestMixin} for usage instructions
  */
 @TestFor(RegistrationService)
-@Mock(User)
+@Mock([User, MailService])
 class RegistrationServiceTests {
 
     def user
@@ -24,7 +25,7 @@ class RegistrationServiceTests {
                 activationKey: activationKey)
         user.save(flush: true, failonerror: true)
 
-        def mockedMailService = [sendMail: { return null }]
+        def mockedMailService = [sendMail: { def closure -> return null }]
         service.mailService = mockedMailService
     }
 

@@ -27,6 +27,6 @@ class BoardGameService {
 
         // if we found a user, add our game!
         if (user)
-            user.boardGames.add(boardGame)
+            user.addToBoardGames(boardGame as BoardGame)
     }
 }

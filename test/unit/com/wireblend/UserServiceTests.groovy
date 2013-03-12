@@ -38,8 +38,28 @@ class UserServiceTests {
         assert service.getUser('test1@gmail.com')
     }
 
-    void test_createLockeduser() {
+    void test_createLockedUser() {
         def user = service.createLockedUser('test2@gmail.com', 'password1', UUID.randomUUID() as String)
         assert user.locked
     }
+
+    void test_createLockedUserPasswordToShortCriteria() {
+        def user = service.createLockedUser('test3@gmail.com', 'PW1', UUID.randomUUID() as String)
+        assert !user
+    }
+
+    /*void test_createLockedUserPasswordNeedsNumeric() {
+        def user = service.createLockedUser('test3@gmail.com', 'password', UUID.randomUUID() as String)
+        assert !user
+    }
+
+    void test_createLockedUserPasswordNeedsUpperCase() {
+        def user = service.createLockedUser('test3@gmail.com', 'password1', UUID.randomUUID() as String)
+        assert !user
+    }
+
+    void test_createLockedUserPasswordNeedsLowerCase() {
+        def user = service.createLockedUser('test3@gmail.com', 'PASSWORD1', UUID.randomUUID() as String)
+        assert !user
+    }*/
 }
