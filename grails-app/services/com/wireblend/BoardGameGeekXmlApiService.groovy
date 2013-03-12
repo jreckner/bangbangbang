@@ -9,18 +9,32 @@ class BoardGameGeekXmlApiService {
     def boardGameGeekSearchExactSearchOption = '&exact=1'
     def boardGameGeekGameDetailsUrl = '/boardgame/'
 
-    def searchBoardGameGeekExact(searchString) {
-        def boardgames = new XmlSlurper().parse(boardGameGeekBaseUrl+boardGameGeekSearchUrl+URLEncoder.encode(searchString)+boardGameGeekSearchExactSearchOption)
+    def searchBoardGameGeek(searchString) {
+        def boardgames = new XmlSlurper().parse(boardGameGeekBaseUrl+boardGameGeekSearchUrl+URLEncoder.encode(searchString))
+        def boardGameSearchResults = []
         boardgames.boardgame.each() { p ->
             log.info(p.@objectid)
             log.info(p.name.text())
+            boardGameSearchResults.add(new BoardGameDTO(name: p.name.text(), objectId: p.@objectid))
         }
+        return boardGameSearchResults;
+    }
+
+    def searchBoardGameGeekExact(searchString) {
+        def boardgames = new XmlSlurper().parse(boardGameGeekBaseUrl+boardGameGeekSearchUrl+URLEncoder.encode(searchString)+boardGameGeekSearchExactSearchOption)
+        def boardGameSearchResults = []
+        boardgames.boardgame.each() { p ->
+            log.info(p.@objectid)
+            log.info(p.name.text())
+            boardGameSearchResults.add(new BoardGameDTO(name: p.name.text(), objectId: p.@objectid))
+        }
+        return boardGameSearchResults;
     }
 
     def getBoardGameGeekDetailsById(id) {
         def boardGames = new XmlSlurper().parse(boardGameGeekBaseUrl+boardGameGeekGameDetailsUrl+id)
-        def p = boardGames.boardgame[0]
-        log.info(p.@objectid)
+        def p = boardGames.boardgame[0]  // Take the first result it SHOULD be exact because the id should be unique.
+        log.info(p.@objectid.text())
         log.info(p.name[0].text())
         log.info(p.age.text())
         log.info(p.minplayers.text())
@@ -32,7 +46,7 @@ class BoardGameGeekXmlApiService {
         log.info(p.playingtime.text())
 
         def boardGame = new BoardGame(
-                objectId: p.@objectid,
+                objectId: p.@objectid.text(),
                 name: p.name[0].text(),
                 age: Integer.parseInt(p.age.text()),
                 minPlayers: Integer.parseInt(p.minplayers.text()),
@@ -43,7 +57,8 @@ class BoardGameGeekXmlApiService {
                 thumbnail: p.thumbnail.text(),
                 playingTime: Integer.parseInt(p.playingtime.text())
         )
-        boardGame.save()
-        return boardGame // return the first one we find with this objectId
+        boardGame.validate()
+        boardGame.save(failOnError: true, flush: true)
+        return BoardGame.findByObjectId(boardGame.objectId)
     }
 }

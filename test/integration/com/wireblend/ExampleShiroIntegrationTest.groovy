@@ -10,7 +10,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class ExampleShiroIntegrationTest extends AbstractShiroIntegrationTest {
+public class ExampleShiroIntegrationTest extends AbstractShiroTest {
 
     @BeforeClass
     public static void beforeClass() {

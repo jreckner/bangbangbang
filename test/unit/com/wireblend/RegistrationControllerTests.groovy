@@ -45,7 +45,7 @@ class RegistrationControllerTests{
     void test_Activate() {
         params.activationKey = UUID.randomUUID()
         controller.activate()
-        assert response.redirectedUrl == '/'
+        assert response.redirectedUrl == '/registration/activationComplete'
     }
 
     void test_ActivateInvalid() {
@@ -54,7 +54,7 @@ class RegistrationControllerTests{
 
         params.activationKey = UUID.randomUUID()
         controller.activate()
-        assert response.redirectedUrl == '/'
+        assert response.redirectedUrl == '/registration/registrationFailure'
     }
 
     void test_Register() {

@@ -13,21 +13,36 @@ class RegistrationController {
         [user: user]
     }
 
+    def activationComplete() {
+
+    }
+
     def activate = {
         if(registrationService.activate(params.activationKey))
         {
             //flash.message = message(code: "useraccount is activated and unlocked.")
             log.debug("useraccount is activated and unlocked.")
-            //TODO: redirect to an activation succeeded page
+            // redirect(uri: "/registration/activationComplete")
+
+            // Keep the username and "remember me" setting so that the
+            // user doesn't have to enter them again.
+            def m = [ username: params.username ]
+            // Now redirect back to the login page.
+            // redirect(action: "activationComplete", params: m)
+            redirect(action: "activationComplete")
         }
         else
         {
-            //flash.message = message(code: "unable to find useraccount for activation.")
             log.debug("unable to find useraccount for activation.")
-            //TODO: redirect to an activation failed page
+            flash.message = message(code: "unable to find useraccount for activation.")
+            redirect(action: "registrationFailure")
         }
-        // Now redirect back to the login page.
-        redirect(uri: "/")
+    }
+
+    def registrationComplete() {
+    }
+
+    def registrationFailure() {
     }
 
     def register() {
@@ -36,7 +51,7 @@ class RegistrationController {
         def user = userService.getUser(params.username)
         if (user) {
             flash.message = "User already exists with the username '${params.username}'"
-            render('index')
+            redirect(action: "registrationFailure")
         }
 
         // User doesn't exist with username. Let's create one
@@ -45,7 +60,7 @@ class RegistrationController {
             // Make sure the passwords match
             if (params.password != params.password2) {
                 flash.message = "Passwords do not match"
-                render('index')
+                redirect(action: "registrationComplete")
             }
 
             // Passwords match. Let's attempt to save the user
@@ -62,10 +77,14 @@ class RegistrationController {
                     //def authToken = new UsernamePasswordToken(user.username, params.password)
                     //SecurityUtils.subject.login(authToken)
 
-                    redirect(uri: "/")
+                    //redirect(uri: "/")
+                    redirect(action: "registrationComplete")
                 }
                 else {
                     //TODO: redirect to an registration failed page
+
+                    // Now redirect back to the login page.
+                    redirect(uri: "registrationFailure")
                 }
             }
         }

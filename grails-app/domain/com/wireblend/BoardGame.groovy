@@ -13,6 +13,9 @@ class BoardGame {
     String thumbnail
     String image
 
+    static hasMany = [ users: User ]
+    static belongsTo = User
+
     static constraints = {
         objectId(nullable: false, unique: true)
     }
