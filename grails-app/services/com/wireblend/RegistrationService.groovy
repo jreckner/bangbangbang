@@ -2,6 +2,8 @@ package com.wireblend
 
 class RegistrationService {
 
+    def mailService
+
     def getNewActivationKey() {
         return UUID.randomUUID() as String
     }
@@ -17,7 +19,7 @@ class RegistrationService {
     }
 
     def sendActivationEmail (username, activationKey, link) {
-        sendMail {
+        mailService.sendMail {
             to username
             subject "Board Games Central Activation Notification"
             html link

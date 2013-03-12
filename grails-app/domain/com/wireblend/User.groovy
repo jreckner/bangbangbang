@@ -9,7 +9,7 @@ class User {
     Integer loginAttemptCount = 0
     String activationKey
     
-    static hasMany = [ roles: Role, permissions: String ]
+    static hasMany = [ roles: Role, permissions: String, boardGames: BoardGame ]
 
     static constraints = {
         username(nullable: false, blank: false, unique: true, email: true)
