@@ -5,6 +5,10 @@ class BoardGameService {
     def boardGameGeekXmlApiService
     def userService
 
+    def findAll() {
+        return BoardGame.findAll()
+    }
+
     def searchGamesByName(searchKeyword) {
         return boardGameGeekXmlApiService.searchBoardGameGeek(searchKeyword)
     }

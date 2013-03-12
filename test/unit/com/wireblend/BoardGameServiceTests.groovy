@@ -31,6 +31,9 @@ class BoardGameServiceTests {
                 thumbnail: 'http//someUrlhere/t',
                 playingTime: 90
         )
+        testBoardGame.validate()
+        testBoardGame.save(flush: true, failonerror: true)
+
         def mockedBoardGameGeekXmlApiService = [
                 searchBoardGameGeek: { searchString -> mockedBoardGameSearchResults },
                 searchBoardGameGeekExact: { searchString -> mockedBoardGameSearchResults },
@@ -87,5 +90,10 @@ class BoardGameServiceTests {
 
     void test_AddToUserCollectionByUserInvalid() {
         service.addToUserCollection('fakeUserName', testBoardGame)
+    }
+
+    void test_findAll() {
+        def boardGames = service.findAll()
+        assert boardGames.size().equals(1)
     }
 }
