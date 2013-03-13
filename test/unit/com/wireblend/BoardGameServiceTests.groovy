@@ -88,6 +88,8 @@ class BoardGameServiceTests {
     }
 
     void test_AddToUserCollectionByUserInvalid() {
+        def mockedUserService = [getUser: { username -> null }]
+        service.userService = mockedUserService
         service.addToUserCollection('fakeUserName', testBoardGame)
     }
 

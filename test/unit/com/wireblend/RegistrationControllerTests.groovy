@@ -28,7 +28,7 @@ class RegistrationControllerTests{
         controller.registrationService = mockedRegistrationService
 
         def mockedUserService = [
-                getUser: { username -> null },
+                getUser: { username -> null }
         ] as UserService
         controller.userService = mockedUserService
     }
@@ -108,4 +108,20 @@ class RegistrationControllerTests{
         controller.register()
         assert response.redirectedUrl == '/registration/registrationFailure'
     }
+
+    /*void test_RegisterBlankParams() {
+        params.username = ''
+        params.password = ''
+        params.password2 = ''
+        controller.register()
+        assert response.redirectedUrl == '/registration/registrationFailure'
+    }
+
+    void test_RegisterNullParams() {
+        params.username = null
+        params.password = null
+        params.password2 = null
+        controller.register()
+        assert response.redirectedUrl == '/registration/registrationFailure'
+    }*/
 }

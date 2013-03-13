@@ -53,9 +53,8 @@ class RegistrationController {
             flash.message = "User already exists with the username '${params.username}'"
             redirect(action: "registrationFailure")
         }
-
-        // User doesn't exist with username. Let's create one
         else {
+            // User doesn't exist with username. Let's create one
 
             // Make sure the passwords match
             if (params.password != params.password2) {

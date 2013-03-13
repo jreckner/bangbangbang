@@ -56,4 +56,9 @@ class RegistrationServiceTests {
 
         assert !service.register('trash@example.com', 'Password1', 'FAKEHTMLURLLink')
     }
+
+    void test_UnableFindBasedOnActivationKey() {
+        def userActivationWithoutUser = new UserActivation().save(flush: true)
+        assert !service.activate(userActivationWithoutUser.activationKey)
+    }
 }
