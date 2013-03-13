@@ -12,7 +12,8 @@ class SecurityFilters {
      * encompasses all actions within the controller.
      */
     static nonAuthenticatedActions = [
-            [controller: 'registration', action: '*']
+            [controller: 'registration', action: '*'],
+            [controller: 'about', action: 'index']
     ]
 
     /**

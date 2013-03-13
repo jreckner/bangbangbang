@@ -66,13 +66,9 @@ class RegistrationController {
             // Passwords match. Let's attempt to save the user
             else {
                 // Create user
-                def activationKey = registrationService.getNewActivationKey()
-                if (userService.createLockedUser(params.username, params.password, activationKey)) {
-
-                    // TODO replace this link with gsp template for pretty email
-                    def link = '<a href="' + createLink(uri: '/', absolute: true) + 'registration/activate/' + activationKey + '">Click Here to activate your Board Games Central account.</a>'
-                    registrationService.sendActivationEmail(params.username, activationKey, link)
-
+                def baseUrl = createLink(uri: '/', absolute: true)
+                if (registrationService.register(params.username, params.password, baseUrl))
+                {
                     // Login user
                     //def authToken = new UsernamePasswordToken(user.username, params.password)
                     //SecurityUtils.subject.login(authToken)
@@ -81,8 +77,6 @@ class RegistrationController {
                     redirect(action: "registrationComplete")
                 }
                 else {
-                    //TODO: redirect to an registration failed page
-
                     // Now redirect back to the login page.
                     redirect(action: "registrationFailure")
                 }

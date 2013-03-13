@@ -1,3 +1,4 @@
+import com.wireblend.UserActivation
 import org.apache.shiro.crypto.hash.Sha256Hash
 import com.wireblend.User
 import com.wireblend.Role
@@ -17,8 +18,7 @@ class BootStrap {
         // Create an admin user
         def adminUser = new User(username: "bang@noreply.com",
                                 passwordHash: new Sha256Hash("bang").toHex(),
-                                locked: false,
-                                activationKey: new String())
+                                locked: false)
         adminUser.addToPermissions("*:*")
         adminUser.save()
 

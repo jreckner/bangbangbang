@@ -7,16 +7,14 @@ class UserService {
     def shiroSecurityService
     def user
 
-    def createLockedUser(username, String password, activationKey) {
+    def createLockedUser(username, password) {
         if (PasswordValidator.validatePasswordCriteria(password))
         {
             user = new User(
                     username: username,
                     passwordHash: shiroSecurityService.encodePassword(password),
                     locked: true,
-                    activationKey: activationKey
-            )
-            user.save()
+                    userActivation: new UserActivation().save(flush: true)).save()
 
             // Add USER role to new user
             user.addToRoles(Role.findByName('ROLE_USER'))

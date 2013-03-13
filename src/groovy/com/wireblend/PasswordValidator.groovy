@@ -10,6 +10,8 @@ package com.wireblend
  *  Password is at least 5 characters.
  */
 class PasswordValidator {
+
+    // Improvements? http://techdive.in/java/java-password-validation
     public static Boolean validatePasswordCriteria(password) {
         if (password.size() > 5)
             return true

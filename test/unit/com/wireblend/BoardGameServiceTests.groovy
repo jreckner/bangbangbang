@@ -9,11 +9,11 @@ import org.junit.*
  * See the API for {@link grails.test.mixin.services.ServiceUnitTestMixin} for usage instructions
  */
 @TestFor(BoardGameService)
-@Mock([BoardGameGeekXmlApiService,UserService,User,BoardGame])
+@Mock([BoardGameGeekXmlApiService,UserService,User,BoardGame,UserActivation])
 class BoardGameServiceTests {
 
     def testBoardGame
-    def user, activationKey
+    def user
 
     void setUp() {
         def mockedBoardGameSearchResults = []
@@ -41,11 +41,10 @@ class BoardGameServiceTests {
         ] as BoardGameGeekXmlApiService
         service.boardGameGeekXmlApiService = mockedBoardGameGeekXmlApiService
 
-        activationKey = UUID.randomUUID() as String
         user = new User(
                 username: 'test1@gmail.com',
                 passwordHash: "hashedPassword1",
-                activationKey: activationKey)
+                userActivation: new UserActivation().save(flush: true))
         user.save(flush: true, failonerror: true)
         def mockedUserService = [getUser: { username -> user }]
         service.userService = mockedUserService

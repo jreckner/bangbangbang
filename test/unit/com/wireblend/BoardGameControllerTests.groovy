@@ -10,12 +10,11 @@ import grails.converters.JSON
  * See the API for {@link grails.test.mixin.web.ControllerUnitTestMixin} for usage instructions
  */
 @TestFor(BoardGameController)
-@Mock([BoardGameService,BoardGame,UserService,User])
+@Mock([BoardGameService,BoardGame,UserService,User,UserActivation])
 class BoardGameControllerTests {
 
     def user
     def boardGame
-    def activationKey
 
     void setUp() {
         def boardGames = []
@@ -51,7 +50,7 @@ class BoardGameControllerTests {
         user = new User(
                 username: 'test1@gmail.com',
                 passwordHash: "hashedPassword1",
-                activationKey: activationKey)
+                userActivation: new UserActivation().save(flush:  true))
         user.validate()
         user.addToBoardGames(boardGame)
         user.save(flush: true, failonerror: true)
