@@ -11,8 +11,7 @@ import org.junit.*
 @TestFor(AboutController)
 class AboutControllerTests {
 
-    void testSomething() {
-//        fail "Implement me"
-        assert true
+    void testIndexRedirect() {
+        controller.index()
     }
 }

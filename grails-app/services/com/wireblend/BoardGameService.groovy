@@ -22,9 +22,7 @@ class BoardGameService {
             boardGameDTOList = boardGameGeekXmlApiService.searchBoardGameGeek(searchKeyword)
 
         boardGameDTOList.each() { dto ->
-            def boardGame = getGameDetails(dto.objectId)
-            if (boardGame)
-                boardGames.add(boardGame)
+            boardGames.add(getGameDetails(dto.objectId))
         }
         return boardGames
     }

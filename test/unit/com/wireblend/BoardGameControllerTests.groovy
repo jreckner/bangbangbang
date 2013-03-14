@@ -43,6 +43,7 @@ class BoardGameControllerTests {
                 searchGamesByName: { searchKeyword,exact -> boardGames },
                 getGameDetails: { objectId -> boardGame },
                 addToUserCollection: { username,boardGame -> null },
+                removeFromUserCollection: { username,boardGame -> null },
                 findAll: { return allBoardGames }
         ] as BoardGameService
         controller.boardGameService = mockedBoardGameService
@@ -93,6 +94,14 @@ class BoardGameControllerTests {
         params.username = user.username
         params.boardGameObjectId = boardGame.objectId
         controller.assignBoardGameToUser()
+
+        // need to return something from the controller to test we did it!
+    }
+
+    void test_RemoveBoardGameFromUser() {
+        params.username = user.username
+        params.boardGameObjectId = boardGame.objectId
+        controller.removeBoardGameFromUser()
 
         // need to return something from the controller to test we did it!
     }
