@@ -18,4 +18,8 @@ class User {
     String toString() {
         "$username"
     }
+
+    static mapping = {
+        table 'account'
+    }
 }
