@@ -39,8 +39,8 @@ class BoardGameControllerTests {
         def allBoardGames = []
         allBoardGames.add(boardGame)
         def mockedBoardGameService = [
-                searchGamesByName: { return boardGames },
-                searchGamesByExactName: { return boardGames },
+                searchGamesByName: { searchKeyword -> boardGames },
+                searchGamesByName: { searchKeyword,exact -> boardGames },
                 getGameDetails: { objectId -> boardGame },
                 addToUserCollection: { username,boardGame -> null },
                 findAll: { return allBoardGames }

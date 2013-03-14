@@ -53,17 +53,27 @@ class BoardGameServiceTests {
     }
 
     void test_SearchGamesByName() {
-        def boardGameSearchResults =  service.searchGamesByName('Dominion')
-        assert boardGameSearchResults[0].name.equals('Dominion0')
-        assert boardGameSearchResults[0].objectId.equals('1')
-        assert boardGameSearchResults[1].name.equals('Dominion1')
-        assert boardGameSearchResults[1].objectId.equals('2')
+        def boardGameSearchResults =  service.searchGamesByName('MyFakeGame')
+        assert boardGameSearchResults[0].name.equals('MyFakeGame')
+        assert boardGameSearchResults[0].objectId.equals('123456')
+        assert boardGameSearchResults[0].yearPublished.equals(2013)
+        assert boardGameSearchResults[0].playingTime.equals(90)
+    }
+
+    void test_SearchGamesByNameNotExact() {
+        def boardGameSearchResults =  service.searchGamesByName('MyFakeGame',false)
+        assert boardGameSearchResults[0].name.equals('MyFakeGame')
+        assert boardGameSearchResults[0].objectId.equals('123456')
+        assert boardGameSearchResults[0].yearPublished.equals(2013)
+        assert boardGameSearchResults[0].playingTime.equals(90)
     }
 
     void test_SearchGamesByExactName() {
-        def boardGameSearchResults =  service.searchGamesByExactName('Dominion')
-        assert boardGameSearchResults[0].name.equals('Dominion0')
-        assert boardGameSearchResults[1].name.equals('Dominion1')
+        def boardGameSearchResults =  service.searchGamesByName('Dominion',true)
+        assert boardGameSearchResults[0].name.equals('MyFakeGame')
+        assert boardGameSearchResults[0].objectId.equals('123456')
+        assert boardGameSearchResults[0].yearPublished.equals(2013)
+        assert boardGameSearchResults[0].playingTime.equals(90)
     }
 
     void test_GetGameDetails() {
