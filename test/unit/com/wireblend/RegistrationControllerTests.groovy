@@ -9,7 +9,7 @@ import org.junit.*
  * See the API for {@link grails.test.mixin.web.ControllerUnitTestMixin} for usage instructions
  */
 @TestFor(RegistrationController)
-@Mock(User)
+@Mock([User,UserActivation])
 class RegistrationControllerTests{
 
     def user
@@ -18,19 +18,17 @@ class RegistrationControllerTests{
         user = new User(
                 username: 'test@gmail.com',
                 passwordHash: new Sha256Hash("Password1").toHex(),
-                activationKey: UUID.randomUUID() as String)
+                userActivation: new UserActivation().save(flush:  true))
         user.save()
 
         def mockedRegistrationService = [
                 activate: { uuid -> true },
-                sendActivationEmail: { username,activationKey,link -> null },
-                getNewActivationKey: { return UUID.randomUUID() }
+                register: { username,password,baseUrl -> true }
         ] as RegistrationService
         controller.registrationService = mockedRegistrationService
 
         def mockedUserService = [
-                getUser: { username -> null },
-                createLockedUser: { username,password,uuid -> true }
+                getUser: { username -> null }
         ] as UserService
         controller.userService = mockedUserService
     }
@@ -98,12 +96,11 @@ class RegistrationControllerTests{
         assert response.redirectedUrl == '/registration/registrationFailure'
     }
 
-    void test_RegisterUnableToCreateLockedUser() {
-        def mockedUserService = [
-                getUser: { username -> null },
-                createLockedUser: { username,password,uuid -> false }
-        ] as UserService
-        controller.userService = mockedUserService
+    void test_RegisterUnableToRegister() {
+        def mockedRegistrationService = [
+                register: { username,password,baseUrl -> false }
+        ] as RegistrationService
+        controller.registrationService = mockedRegistrationService
 
         params.username = 'test@example.com'
         params.password = 'matchThis'
@@ -111,4 +108,20 @@ class RegistrationControllerTests{
         controller.register()
         assert response.redirectedUrl == '/registration/registrationFailure'
     }
+
+    /*void test_RegisterBlankParams() {
+        params.username = ''
+        params.password = ''
+        params.password2 = ''
+        controller.register()
+        assert response.redirectedUrl == '/registration/registrationFailure'
+    }
+
+    void test_RegisterNullParams() {
+        params.username = null
+        params.password = null
+        params.password2 = null
+        controller.register()
+        assert response.redirectedUrl == '/registration/registrationFailure'
+    }*/
 }

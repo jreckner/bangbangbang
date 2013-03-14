@@ -9,11 +9,11 @@ import org.junit.*
  * See the API for {@link grails.test.mixin.services.ServiceUnitTestMixin} for usage instructions
  */
 @TestFor(BoardGameService)
-@Mock([BoardGameGeekXmlApiService,UserService,User,BoardGame])
+@Mock([BoardGameGeekXmlApiService,UserService,User,BoardGame,UserActivation])
 class BoardGameServiceTests {
 
     def testBoardGame
-    def user, activationKey
+    def user
 
     void setUp() {
         def mockedBoardGameSearchResults = []
@@ -41,11 +41,10 @@ class BoardGameServiceTests {
         ] as BoardGameGeekXmlApiService
         service.boardGameGeekXmlApiService = mockedBoardGameGeekXmlApiService
 
-        activationKey = UUID.randomUUID() as String
         user = new User(
                 username: 'test1@gmail.com',
                 passwordHash: "hashedPassword1",
-                activationKey: activationKey)
+                userActivation: new UserActivation().save(flush: true))
         user.save(flush: true, failonerror: true)
         def mockedUserService = [getUser: { username -> user }]
         service.userService = mockedUserService
@@ -54,17 +53,27 @@ class BoardGameServiceTests {
     }
 
     void test_SearchGamesByName() {
-        def boardGameSearchResults =  service.searchGamesByName('Dominion')
-        assert boardGameSearchResults[0].name.equals('Dominion0')
-        assert boardGameSearchResults[0].objectId.equals('1')
-        assert boardGameSearchResults[1].name.equals('Dominion1')
-        assert boardGameSearchResults[1].objectId.equals('2')
+        def boardGameSearchResults =  service.searchGamesByName('MyFakeGame')
+        assert boardGameSearchResults[0].name.equals('MyFakeGame')
+        assert boardGameSearchResults[0].objectId.equals('123456')
+        assert boardGameSearchResults[0].yearPublished.equals(2013)
+        assert boardGameSearchResults[0].playingTime.equals(90)
+    }
+
+    void test_SearchGamesByNameNotExact() {
+        def boardGameSearchResults =  service.searchGamesByName('MyFakeGame',false)
+        assert boardGameSearchResults[0].name.equals('MyFakeGame')
+        assert boardGameSearchResults[0].objectId.equals('123456')
+        assert boardGameSearchResults[0].yearPublished.equals(2013)
+        assert boardGameSearchResults[0].playingTime.equals(90)
     }
 
     void test_SearchGamesByExactName() {
-        def boardGameSearchResults =  service.searchGamesByExactName('Dominion')
-        assert boardGameSearchResults[0].name.equals('Dominion0')
-        assert boardGameSearchResults[1].name.equals('Dominion1')
+        def boardGameSearchResults =  service.searchGamesByName('Dominion',true)
+        assert boardGameSearchResults[0].name.equals('MyFakeGame')
+        assert boardGameSearchResults[0].objectId.equals('123456')
+        assert boardGameSearchResults[0].yearPublished.equals(2013)
+        assert boardGameSearchResults[0].playingTime.equals(90)
     }
 
     void test_GetGameDetails() {
@@ -89,6 +98,8 @@ class BoardGameServiceTests {
     }
 
     void test_AddToUserCollectionByUserInvalid() {
+        def mockedUserService = [getUser: { username -> null }]
+        service.userService = mockedUserService
         service.addToUserCollection('fakeUserName', testBoardGame)
     }
 

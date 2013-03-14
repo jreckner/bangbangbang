@@ -11,11 +11,10 @@ import org.junit.*
  * See the API for {@link grails.test.mixin.services.ServiceUnitTestMixin} for usage instructions
  */
 @TestFor(UserService)
-@Mock([User,Role])
+@Mock([User,Role,UserActivation])
 class UserServiceTests {
 
     def user
-    def activationKey
     def mockedShiroSecurityService
 
     void setUp() {
@@ -26,11 +25,10 @@ class UserServiceTests {
         mockedShiroSecurityService = [encodePassword: { String password -> password }] as ShiroSecurityService
         service.shiroSecurityService = mockedShiroSecurityService
 
-        activationKey = UUID.randomUUID() as String
         user = new User(
                 username: 'test1@gmail.com',
                 passwordHash: "hashedPassword1",
-                activationKey: activationKey)
+                serActivation: new UserActivation().save(flush: true))
         user.save(flush: true, failonerror: true)
     }
 
@@ -39,12 +37,12 @@ class UserServiceTests {
     }
 
     void test_createLockedUser() {
-        def user = service.createLockedUser('test2@gmail.com', 'password1', UUID.randomUUID() as String)
+        def user = service.createLockedUser('test2@gmail.com', 'password1')
         assert user.locked
     }
 
     void test_createLockedUserPasswordToShortCriteria() {
-        def user = service.createLockedUser('test3@gmail.com', 'PW1', UUID.randomUUID() as String)
+        def user = service.createLockedUser('test3@gmail.com', 'PW1')
         assert !user
     }
 

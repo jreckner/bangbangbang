@@ -10,15 +10,30 @@ class BoardGameService {
     }
 
     def searchGamesByName(searchKeyword) {
-        return boardGameGeekXmlApiService.searchBoardGameGeek(searchKeyword)
+        return searchGamesByName(searchKeyword, false)
     }
 
-    def searchGamesByExactName(searchKeyword) {
-        return boardGameGeekXmlApiService.searchBoardGameGeekExact(searchKeyword)
+    def searchGamesByName(searchKeyword, exact) {
+        def boardGames = []
+        def boardGameDTOList
+        if (exact)
+            boardGameDTOList =  boardGameGeekXmlApiService.searchBoardGameGeekExact(searchKeyword)
+        else
+            boardGameDTOList = boardGameGeekXmlApiService.searchBoardGameGeek(searchKeyword)
+
+        boardGameDTOList.each() { dto ->
+            def boardGame = getGameDetails(dto.objectId)
+            if (boardGame)
+                boardGames.add(boardGame)
+        }
+        return boardGames
     }
 
     def getGameDetails(objectId) {
         // TODO see if we already have the game stored in our db
+        def boardGame = BoardGame.findByObjectId(objectId)
+        if (boardGame)
+            return boardGame
         return boardGameGeekXmlApiService.getBoardGameGeekDetailsById(objectId)
     }
 
@@ -27,10 +42,30 @@ class BoardGameService {
         if (username instanceof User)
             user = username
         else
-            user = userService.getUser(user)
+            user = userService.getUser(username)
 
         // if we found a user, add our game!
         if (user)
+        {
             user.addToBoardGames(boardGame as BoardGame)
+            user.save(flush: true)
+        }
+
+    }
+
+    def removeFromUserCollection(username, boardGame) {
+        User user = null
+        if (username instanceof User)
+            user = username
+        else
+            user = userService.getUser(username)
+
+        // if we found a user, add our game!
+        if (user)
+        {
+            user.removeFromBoardGames(boardGame as BoardGame)
+            user.save(flush: true)
+        }
+
     }
 }
