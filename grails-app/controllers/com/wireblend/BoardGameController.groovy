@@ -9,6 +9,10 @@ class BoardGameController {
 
     def scaffold = BoardGame
 
+    def index() {
+
+    }
+
     def searchBoardGames = {
         HashMap jsonMap = new HashMap()
         jsonMap.put("sEcho", params.sEcho)

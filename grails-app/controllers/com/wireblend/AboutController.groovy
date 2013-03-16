@@ -4,6 +4,5 @@ class AboutController {
 
     def index() {
 
-
     }
 }

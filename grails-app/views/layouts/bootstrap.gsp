@@ -57,14 +57,15 @@
                                 <a class="navbar-link" href="${createLink(uri: '/registration')}">Register</a>
                             </p>
                             <form action="${createLink(uri: '/auth/signIn')}" class="form-signin navbar-form pull-right">
-                                <input class="span2" type="text" name="username" placeholder="Email">
-                                <input class="span2" type="password" name="password" placeholder="Password">
+                                <input class="span2 top-login" type="text" name="username" placeholder="Email">
+                                <input class="span2 top-login" type="password" name="password" placeholder="Password">
                                 <button class="btn btn-primary" type="submit">Sign in</button>
                             </form>
                         </shiro:notAuthenticated>
 
 						<ul class="nav">
 							<li<%= request.forwardURI == "${createLink(uri: '/')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/')}">Home</a></li>
+                            <li<%= request.forwardURI == "${createLink(uri: '/games')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/games')}">Game Search</a></li>
                             <li<%= request.forwardURI == "${createLink(uri: '/forums')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/')}">Forums</a></li>
                             <li<%= request.forwardURI == "${createLink(uri: '/about')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/about')}">About</a></li>
 						</ul>
