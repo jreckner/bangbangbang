@@ -45,7 +45,7 @@ grails.project.dependency.resolution = {
         //compile "org.apache.shiro:shiro-core:1.2.1"
         //compile "org.apache.shiro:shiro-web:1.2.1"
         //compile "org.apache.shiro:shiro-spring:1.2.1"
-
+        runtime "postgresql:postgresql:9.1-901.jdbc4"
         // workaround for code-coverage breakage in Grails 2.2.x
         // ref: https://jira.grails.org/browse/GPCODECOVERAGE-50
         test 'net.sourceforge.cobertura:cobertura:1.9.4.1'
@@ -71,7 +71,7 @@ grails.project.dependency.resolution = {
         compile ':cache:1.0.1'
         compile ":shiro:1.1.4"
         compile ":lesscss-resources:1.3.1"
-
+        compile ":mongodb:1.2.0"
         compile ":mail:1.0.1"
 	    test ":code-coverage:1.2.5"
     }

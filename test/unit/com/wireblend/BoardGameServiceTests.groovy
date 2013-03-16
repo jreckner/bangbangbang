@@ -9,11 +9,11 @@ import org.junit.*
  * See the API for {@link grails.test.mixin.services.ServiceUnitTestMixin} for usage instructions
  */
 @TestFor(BoardGameService)
-@Mock([BoardGameGeekXmlApiService,UserService,User,BoardGame])
+@Mock([BoardGameGeekXmlApiService,UserService,User,BoardGame,UserActivation])
 class BoardGameServiceTests {
 
     def testBoardGame
-    def user, activationKey
+    def user
 
     void setUp() {
         def mockedBoardGameSearchResults = []
@@ -21,7 +21,7 @@ class BoardGameServiceTests {
         mockedBoardGameSearchResults.add(new BoardGameDTO(name: 'Dominion1', objectId: '2'))
         testBoardGame = new BoardGame(
                 objectId: '123456',
-                name: 'MyFakeGame',
+                name: 'MyBoardGame',
                 age: 21,
                 minPlayers: 2,
                 maxPlayers: 6,
@@ -41,11 +41,10 @@ class BoardGameServiceTests {
         ] as BoardGameGeekXmlApiService
         service.boardGameGeekXmlApiService = mockedBoardGameGeekXmlApiService
 
-        activationKey = UUID.randomUUID() as String
         user = new User(
                 username: 'test1@gmail.com',
                 passwordHash: "hashedPassword1",
-                activationKey: activationKey)
+                userActivation: new UserActivation().save(flush: true))
         user.save(flush: true, failonerror: true)
         def mockedUserService = [getUser: { username -> user }]
         service.userService = mockedUserService
@@ -54,23 +53,43 @@ class BoardGameServiceTests {
     }
 
     void test_SearchGamesByName() {
-        def boardGameSearchResults =  service.searchGamesByName('Dominion')
-        assert boardGameSearchResults[0].name.equals('Dominion0')
-        assert boardGameSearchResults[0].objectId.equals('1')
-        assert boardGameSearchResults[1].name.equals('Dominion1')
-        assert boardGameSearchResults[1].objectId.equals('2')
+        def boardGameSearchResults =  service.searchGamesByName('MyBoardGame')
+        assert boardGameSearchResults[0].name.equals('MyBoardGame')
+        assert boardGameSearchResults[0].objectId.equals('123456')
+        assert boardGameSearchResults[0].yearPublished.equals(2013)
+        assert boardGameSearchResults[0].playingTime.equals(90)
+    }
+
+    void test_SearchGamesByNameNotFound() {
+        def mockedBoardGameGeekXmlApiService = [
+                searchBoardGameGeek: { searchString -> null }
+        ]
+        service.boardGameGeekXmlApiService = mockedBoardGameGeekXmlApiService
+
+        def boardGameSearchResults =  service.searchGamesByName('FakeGame')
+        assert boardGameSearchResults.size().equals(0)
+    }
+
+    void test_SearchGamesByNameNotExact() {
+        def boardGameSearchResults =  service.searchGamesByName('MyBoardGame',false)
+        assert boardGameSearchResults[0].name.equals('MyBoardGame')
+        assert boardGameSearchResults[0].objectId.equals('123456')
+        assert boardGameSearchResults[0].yearPublished.equals(2013)
+        assert boardGameSearchResults[0].playingTime.equals(90)
     }
 
     void test_SearchGamesByExactName() {
-        def boardGameSearchResults =  service.searchGamesByExactName('Dominion')
-        assert boardGameSearchResults[0].name.equals('Dominion0')
-        assert boardGameSearchResults[1].name.equals('Dominion1')
+        def boardGameSearchResults =  service.searchGamesByName('Dominion',true)
+        assert boardGameSearchResults[0].name.equals('MyBoardGame')
+        assert boardGameSearchResults[0].objectId.equals('123456')
+        assert boardGameSearchResults[0].yearPublished.equals(2013)
+        assert boardGameSearchResults[0].playingTime.equals(90)
     }
 
     void test_GetGameDetails() {
         def boardGame = service.getGameDetails('123456')
         assert boardGame.objectId.equals('123456')
-        assert boardGame.name.equals('MyFakeGame')
+        assert boardGame.name.equals('MyBoardGame')
     }
 
     void test_AddToUserCollection() {
@@ -89,7 +108,39 @@ class BoardGameServiceTests {
     }
 
     void test_AddToUserCollectionByUserInvalid() {
+        def mockedUserService = [getUser: { username -> null }]
+        service.userService = mockedUserService
         service.addToUserCollection('fakeUserName', testBoardGame)
+    }
+
+    void test_RemoveFromUserCollection() {
+        service.addToUserCollection('test1@gmail.com', testBoardGame)
+        assert user.boardGames.size().equals(1)
+
+        service.removeFromUserCollection('test1@gmail.com', testBoardGame)
+        assert user.boardGames.size().equals(0)
+    }
+
+    void test_RemoveFromUserCollectionByUsername() {
+        service.addToUserCollection(user.username, testBoardGame)
+        assert user.boardGames.size().equals(1)
+
+        service.removeFromUserCollection(user.username, testBoardGame)
+        assert user.boardGames.size().equals(0)
+    }
+
+    void test_RemoveFromUserCollectionByUser() {
+        service.addToUserCollection(user, testBoardGame)
+        assert user.boardGames.size().equals(1)
+
+        service.removeFromUserCollection(user, testBoardGame)
+        assert user.boardGames.size().equals(0)
+    }
+
+    void test_RemoveFromUserCollectionByUserInvalid() {
+        def mockedUserService = [getUser: { username -> null }]
+        service.userService = mockedUserService
+        service.removeFromUserCollection('fakeUserName', testBoardGame)
     }
 
     void test_findAll() {
