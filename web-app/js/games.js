@@ -29,7 +29,9 @@ $( document ).ready(function() {
                       description: data.boardGames[i].description,
                       minPlayers: data.boardGames[i].minPlayers,
                       maxPlayers: data.boardGames[i].maxPlayers,
-                      thumbnail: data.boardGames[i].thumbnail
+                      thumbnail: data.boardGames[i].thumbnail,
+                      yearPublished: data.boardGames[i].yearPublished,
+                      playingTime: data.boardGames[i].playingTime
                   }
                   var html    = template(context);
                   $('#search-results').append(html);

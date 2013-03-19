@@ -5,10 +5,11 @@
     <title>Game Search</title>
     <meta name="layout" content="bootstrap"/>
     <script type="text/javascript" src="${resource(dir: 'js', file: 'games.js')}"></script>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'games.css')}" type="text/css">
 
     <script id="entry-template" type="text/x-handlebars-template">
         <div class="entry">
-          <h4>{{name}}</h4>
+          <h4>{{name}} ({{yearPublished}})</h4>
             <div>
                 <img src="{{thumbnail}}" alt="{{name}}" title="{{name}}" >
             </div>
@@ -16,7 +17,7 @@
             {{{description}}}
           </div>
           <div class="game-players">
-              Players: {{minPlayers}} - {{maxPlayers}}
+              Players: {{minPlayers}} - {{maxPlayers}}, Play Time: {{playingTime}} minutes
           </div>
         </div>
     </script>
