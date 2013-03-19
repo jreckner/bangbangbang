@@ -17,6 +17,13 @@
 			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
 
+        <g:javascript>
+           window.appContext = '${request.contextPath}';
+        </g:javascript>
+
+        <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery-1.9.1.min.js')}"></script>
+        <script type="text/javascript" src="${resource(dir: 'js', file: 'handlebars.js')}"></script>
+
         <r:require modules="customBootstrap"/>
 		%{--<r:require modules="scaffolding"/>--}%
 
