@@ -9,11 +9,19 @@ class BootStrap {
 
         // Create the admin role
         def adminRole = Role.findByName('ROLE_ADMIN') ?:
-            new Role(name: 'ROLE_ADMIN').save(flush: true, failOnError: true)
+            new Role(name: 'ROLE_ADMIN')
+        adminRole.addToPermissions("*:*")
+        adminRole.save(flush: true, failOnError: true)
 
         // Create the user role
         def userRole = Role.findByName('ROLE_USER') ?:
-            new Role(name: 'ROLE_USER').save(flush: true, failOnError: true)
+            new Role(name: 'ROLE_USER')
+        userRole.addToPermissions("about:*")
+        userRole.addToPermissions("auth:*")
+        userRole.addToPermissions("boardGame:*")
+        userRole.addToPermissions("registration:*")
+        userRole.save(flush: true, failOnError: true)
+
 
         // Create an admin user
         def adminUser = new User(username: "bang@noreply.com",

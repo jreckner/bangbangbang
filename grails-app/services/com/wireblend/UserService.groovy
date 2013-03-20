@@ -14,10 +14,11 @@ class UserService {
                     username: username,
                     passwordHash: shiroSecurityService.encodePassword(password),
                     locked: true,
-                    userActivation: new UserActivation().save(flush: true)).save()
+                    userActivation: new UserActivation().save(flush: true))
 
             // Add USER role to new user
             user.addToRoles(Role.findByName('ROLE_USER'))
+            user.save()
         }
         return user
     }

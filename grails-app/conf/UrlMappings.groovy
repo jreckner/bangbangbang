@@ -8,6 +8,7 @@ class UrlMappings {
 		}
 
         // Clean URLs are Important
+        "/about"(controller:"about", action: "index")
         "/registration"(controller:"registration", action: "index")
         "/registration/activate/$activationKey?"(controller: "registration", action: "activate")
 

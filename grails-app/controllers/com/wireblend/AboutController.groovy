@@ -2,7 +2,8 @@ package com.wireblend
 
 class AboutController {
 
-    def index() {
+    static defaultAction = "index"
 
+    def index() {
     }
 }

@@ -16,56 +16,22 @@ class SecurityFilters {
             [controller: 'about', action: 'index']
     ]
 
-    /**
-     * Array of controller/action combinations that will be authenticated against the user's
-     * role. The map also includes the roles which the controller/action pair will match
-     * against.
-     */
-    static authenticatedActions = [
-            [controller: 'boardGame', action: '*', roles: ['ROLE_ADMIN', 'ROLE_USER']],
-            [controller: 'user', action: '*', roles: ['ROLE_ADMIN']]
-    ]
-
     def filters = {
-
-        all(controller: '*', action: '*') {
+        all(uri: "/**") {
             before = {
 
-                // Determine if the controller/action belongs is not to be authenticated
-                def needsAuth = !nonAuthenticatedActions.find {
+                def skipAuth = nonAuthenticatedActions.find {
                     (it.controller == controllerName) &&
                             ((it.action == '*') || (it.action == actionName))
                 }
 
-                if (needsAuth) {
-
-                    // Get the map within the authenticated actions which pertain to the current
-                    // controller and view.
-                    def authRoles = authenticatedActions.find {
-                        (it.controller == controllerName) &&
-                                ((it.action == '*') || (it.action == actionName))
-                    }
-
-                    if (authRoles) {
-
-                        // Perform the access control for each of the roles provided in the authRoles
-                        accessControl {
-                            authRoles.roles.each { roleName ->
-                                role(roleName)
-                            }
-                        }
-                    }
-
-                    // Skip authentication if the authRoles was not found
-                    else {
-                        return true
-                    }
-                }
-
-                // Skip authentication if no auth is needed
-                else {
+                if(skipAuth)
                     return true
-                }
+
+                // Ignore direct views (e.g. the default main index page).
+                if (!controllerName) return true
+                // Access control by convention.
+                accessControl()
             }
         }
     }
