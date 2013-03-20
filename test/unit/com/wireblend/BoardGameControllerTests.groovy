@@ -62,6 +62,10 @@ class BoardGameControllerTests {
         controller.userService = mockedUserService
     }
 
+    void testIndexRedirect() {
+        controller.index()
+    }
+
     void test_SearchBoardGames() {
         params.exact = 1
         params.sEcho = 1

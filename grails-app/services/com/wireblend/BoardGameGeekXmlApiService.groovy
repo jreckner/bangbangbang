@@ -45,7 +45,7 @@ class BoardGameGeekXmlApiService {
         log.info(p.thumbnail.text())
         log.info(p.playingtime.text())
 
-        def primaryName
+        def primaryName = 'unknown'
         if(p.name.size() > 1) {
             p.name.each { n ->
                 if(Boolean.parseBoolean(n.@primary.text())) {
@@ -71,6 +71,6 @@ class BoardGameGeekXmlApiService {
         )
         boardGame.validate()
         boardGame.save(failOnError: true, flush: true)
-        return BoardGame.findByObjectId(boardGame.objectId)
+        return boardGame
     }
 }
