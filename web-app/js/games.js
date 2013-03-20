@@ -4,9 +4,16 @@ $( document ).ready(function() {
         $('#search-results').html('');
 
         var searchTerm = $('#gameSearch').val();
+        if(document.getElementById('exactGameSearch').checked) {
+            var urlPath = "/rest/1.0/boardgame/search/"+searchTerm+"?exact=1";
+        }
+        else {
+            var urlPath = "/rest/1.0/boardgame/search/"+searchTerm;
+        }
+
         $.ajax({
           type: 'GET',
-          url: appContext + "/rest/1.0/boardgame/search/"+searchTerm,
+          url: appContext + urlPath,
           dataType: 'json',
           success: function (data) {
 
@@ -37,9 +44,6 @@ $( document ).ready(function() {
                   $('#search-results').append(html);
 
               }
-
-
-
             }
         });
     });

@@ -15,7 +15,7 @@ class BoardGameGeekXmlApiServiceTests {
     void setUp() {
     }
 
-    void test_SearchBoardGameGeek() {
+    void test_SearchBoardGameGeekDominion() {
         def boardGameDTOList = service.searchBoardGameGeek('Dominion')
         assert boardGameDTOList.size().equals(27)
     }
@@ -25,9 +25,21 @@ class BoardGameGeekXmlApiServiceTests {
         assert boardGameDTOList[0].objectId.equals('36218')
     }
 
-    void test_GetBoardGameGeekDetailsById() {
+    void test_GetBoardGameGeekDetailsByIdDieMacher() {
+        def boardGame = service.getBoardGameGeekDetailsById('1') // This is for Dominion
+        assert boardGame
+        assert boardGame.objectId.equals('1')
+    }
+
+    void test_GetBoardGameGeekDetailsByIdDominion() {
         def boardGame = service.getBoardGameGeekDetailsById('36218') // This is for Dominion
         assert boardGame
         assert boardGame.objectId.equals('36218')
+    }
+
+    void test_GetBoardGameGeekDetailsByIdTicketToRide() {
+        def boardGame = service.getBoardGameGeekDetailsById('9209') // This is for Ticket to Ride
+        assert boardGame
+        assert boardGame.objectId.equals('9209')
     }
 }

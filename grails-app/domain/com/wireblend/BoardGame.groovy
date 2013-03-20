@@ -20,6 +20,10 @@ class BoardGame {
         objectId(nullable: false, unique: true)
     }
 
+    static mapping = {
+        description type: "text"
+    }
+
     String toString() {
         "$name - $yearPublished"
     }

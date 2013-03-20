@@ -39,19 +39,31 @@ class BoardGameGeekXmlApiService {
         log.info(p.age.text())
         log.info(p.minplayers.text())
         log.info(p.maxplayers.text())
-        log.info(p.description.text()[0..254])
+        log.info(p.description.text())
         log.info(p.yearpublished.text())
         log.info(p.image.text())
         log.info(p.thumbnail.text())
         log.info(p.playingtime.text())
 
+        def primaryName
+        if(p.name.size() > 1) {
+            p.name.each { n ->
+                if(Boolean.parseBoolean(n.@primary.text())) {
+                    primaryName = n.text()
+                }
+            }
+        }
+        else {
+            primaryName = p.name[0].text()
+        }
+
         def boardGame = new BoardGame(
                 objectId: p.@objectid.text(),
-                name: p.name[0].text(),
+                name: primaryName,
                 age: Integer.parseInt(p.age.text()),
                 minPlayers: Integer.parseInt(p.minplayers.text()),
                 maxPlayers: Integer.parseInt(p.maxplayers.text()),
-                description: p.description.text()[0..254],
+                description: p.description.text(),
                 yearPublished: Integer.parseInt(p.yearpublished.text()),
                 image: p.image.text(),
                 thumbnail: p.thumbnail.text(),

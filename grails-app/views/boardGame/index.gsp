@@ -36,6 +36,7 @@
                 <div class="span4">
                     <h2 class="form-signin-heading">Search for Games</h2>
                     <input type="text" id="gameSearch" name="gameSearch" class="input-block-level"  placeholder="Game to look up.."/>
+                    <input type="checkbox" id="exactGameSearch" name="exactGameSearch" value="1" />Exact Search<br>
                     <button id="game-search-submit" class="btn btn-primary" type="submit">Search</button>
                 </div>
                 <div class="span2">
