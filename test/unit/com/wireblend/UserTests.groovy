@@ -29,11 +29,6 @@ class UserTests {
         assert user.getLoginAttemptCount().equals(2)
     }
 
-    void test_SetLoginAttemptCount() {
-        user.setLoginAttemptCount(10)
-        assert user.getLoginAttemptCount().equals(0)
-    }
-
     void test_ResetLoginAttemptCount() {
         user.incrementLoginAttemptCount()
         assert user.getLoginAttemptCount().equals(1)

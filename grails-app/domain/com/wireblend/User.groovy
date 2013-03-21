@@ -8,7 +8,7 @@ class User {
     Date lastLoginAttemptTimestamp
     UserActivation userActivation
 
-    private Integer loginAttemptCount = 0
+    Integer loginAttemptCount = 0
 
     static hasMany = [ roles: Role, permissions: String, boardGames: BoardGame ]
 
@@ -22,13 +22,6 @@ class User {
     // save() must be invoked by the caller!
     def void incrementLoginAttemptCount() {
         loginAttemptCount++
-    }
-
-    def Integer getLoginAttemptCount() {
-        return loginAttemptCount
-    }
-
-    def void setLoginAttemptCount(count) {
     }
 
     def void resetLoginAttemptCount() {

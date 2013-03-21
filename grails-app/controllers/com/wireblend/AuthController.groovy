@@ -6,6 +6,7 @@ import org.apache.shiro.authc.UsernamePasswordToken
 import org.apache.shiro.web.util.SavedRequest
 import org.apache.shiro.web.util.WebUtils
 import org.apache.shiro.grails.ConfigUtils
+import groovy.time.TimeCategory
 
 class AuthController {
     def shiroSecurityManager
@@ -13,7 +14,8 @@ class AuthController {
     def index = { redirect(action: "login", params: params) }
 
     def login = {
-        return [ username: params.username, rememberMe: (params.rememberMe != null), targetUri: params.targetUri ]
+        flash.message = params.message
+        return [ username: params.username, rememberMe: (params.rememberMe != null), targetUri: params.targetUri, message: params.message ]
     }
 
     def signIn = {
@@ -23,11 +25,11 @@ class AuthController {
         if (params.rememberMe) {
             authToken.rememberMe = true
         }
-        
+
         // If a controller redirected to this page, redirect back
         // to it. Otherwise redirect to the root URI.
         def targetUri = params.targetUri ?: "/"
-        
+
         // Handle requests saved by Shiro filters.
         def savedRequest = WebUtils.getSavedRequest(request)
         if (savedRequest) {
@@ -38,11 +40,9 @@ class AuthController {
         //Find out if this userId is locked before allowing any login.
         def user = User.findByUsername(params.username)
         if (user && user.locked) {
-            flash.message = message(code: "useraccount is locked.")
-
             // Keep the username and "remember me" setting so that the
             // user doesn't have to enter them again.
-            def m = [ username: params.username ]
+            def m = [ username: params.username, message: message(code: "login.locked") ]
             if (params.rememberMe) {
                 m["rememberMe"] = true
             }
@@ -63,18 +63,23 @@ class AuthController {
                 // password is incorrect.
                 SecurityUtils.subject.login(authToken)
 
+                if(user.loginAttemptCount > 0) {
+                    user.loginPeriodStartTimestamp = null
+                    // user.lastLoginAttemptTimestamp = null
+                    user.loginAttemptCount = 0
+                    user.save()
+                }
+
                 log.info "Redirecting to '${targetUri}'."
                 redirect(uri: targetUri)
             }
             catch (AuthenticationException ex){
-                // Authentication failed, so display the appropriate message
-                // on the login page.
-                log.info "Authentication failure for user '${params.username}'."
-                flash.message = message(code: "login.failed")
-
                 // Keep the username and "remember me" setting so that the
                 // user doesn't have to enter them again.
-                def m = [ username: params.username ]
+                // Authentication failed, so display the appropriate message
+                def m = [ username: params.username, message: message(code: "login.failed") ]
+                log.info "Authentication failure for user ${params.username}"
+
                 if (params.rememberMe) {
                     m["rememberMe"] = true
                 }
@@ -84,8 +89,47 @@ class AuthController {
                     m["targetUri"] = params.targetUri
                 }
 
-                // Now redirect back to the login page.
-                redirect(action: "login", params: m)
+                if(user) {
+                    // First Failure sets our timestamps to keep track of retries
+                    if(user.loginPeriodStartTimestamp == null) {
+                        user.loginPeriodStartTimestamp = new Date()
+                        user.lastLoginAttemptTimestamp = new Date()
+                    }
+                    else {
+                        // Subsequent failures
+                        user.lastLoginAttemptTimestamp = new Date()
+                    }
+                    user.incrementLoginAttemptCount()
+                    user.save()
+
+                    // request.getRemoteAddr()
+                    // request.getHeader("X-Forwarded-For")
+                    // request.getHeader("Client-IP")
+                    println("${user.username} has login attempts: ${user.getLoginAttemptCount()} from ${request.getRemoteAddr()}")
+                    log.warn("${user.username} has login attempts: ${user.getLoginAttemptCount()} from ${request.getRemoteAddr()}")
+
+                    if(user.loginAttemptCount > 5) {
+                        def duration = TimeCategory.minus(user.lastLoginAttemptTimestamp, user.loginPeriodStartTimestamp)
+                        if(duration.getMinutes() < 5) {
+                            redirect(action: "accessdenied")
+                        }
+                        else {
+                            user.loginPeriodStartTimestamp = new Date()
+                            // user.lastLoginAttemptTimestamp = new Date()
+                            user.resetLoginAttemptCount()
+                            user.save()
+                            redirect(action: "login", params: m)
+                        }
+                    }
+                    else {
+                        // Now redirect back to the login page.
+                        redirect(action: "login", params: m)
+                    }
+                }
+                else {
+                    // Now redirect back to the login page.
+                    redirect(action: "login", params: m)
+                }
             }
         }
     }

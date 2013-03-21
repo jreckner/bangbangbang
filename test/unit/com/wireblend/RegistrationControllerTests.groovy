@@ -4,6 +4,7 @@ import grails.test.ControllerUnitTestCase
 import grails.test.mixin.*
 import org.apache.shiro.crypto.hash.Sha256Hash
 import org.junit.*
+import java.net.URLEncoder
 
 /**
  * See the API for {@link grails.test.mixin.web.ControllerUnitTestMixin} for usage instructions
@@ -31,6 +32,9 @@ class RegistrationControllerTests{
                 getUser: { username -> null }
         ] as UserService
         controller.userService = mockedUserService
+
+        // i18n mockup
+        controller.metaClass.message = { it.code }
     }
 
     void tearDown() {
@@ -40,22 +44,15 @@ class RegistrationControllerTests{
         controller.index()
     }
 
-    void test_ActivationCompleteRedirect() {
-        controller.activationComplete()
-    }
-
     void test_registrationCompleteRedirect() {
         controller.registrationComplete()
     }
 
-    void test_registrationFailureRedirect() {
-        controller.registrationFailure()
-    }
-
     void test_Activate() {
         params.activationKey = UUID.randomUUID()
+        params.username = user.username
         controller.activate()
-        assert response.redirectedUrl == '/registration/activationComplete'
+        assert response.redirectedUrl == "/auth/login?username="+URLEncoder.encode(user.username)+"&message=useraccount+is+activated+and+unlocked."
     }
 
     void test_ActivateInvalid() {
@@ -63,7 +60,9 @@ class RegistrationControllerTests{
         controller.registrationService = mockedRegistrationService
 
         params.activationKey = UUID.randomUUID()
+        params.username = user.username
         controller.activate()
+        assert flash.message == "unable to find username '${user.username}' for activation."
         assert response.redirectedUrl == '/registration/registrationFailure'
     }
 
@@ -76,11 +75,12 @@ class RegistrationControllerTests{
     }
 
     void test_RegisterPasswordMismatch() {
-        params.username = 'test@example.com'
+        params.username = user.username
         params.password = 'matchThis'
         params.password2 = 'mismatched'
         controller.register()
-        assert response.redirectedUrl == '/registration/registrationFailure'
+        assert flash.message == "Passwords do not match"
+        assert response.redirectedUrl == "/registration/index?username="+URLEncoder.encode(user.username)
     }
 
     void test_RegisterExistingUser() {
@@ -89,11 +89,12 @@ class RegistrationControllerTests{
         ] as UserService
         controller.userService = mockedUserService
 
-        params.username = 'test@example.com'
+        params.username = user.username
         params.password = 'matchThis'
         params.password2 = 'matchThis'
         controller.register()
-        assert response.redirectedUrl == '/registration/registrationFailure'
+        assert flash.message == "User already exists with the username '${user.username}'"
+        assert response.redirectedUrl == '/registration/index'
     }
 
     void test_RegisterUnableToRegister() {
@@ -106,22 +107,7 @@ class RegistrationControllerTests{
         params.password = 'matchThis'
         params.password2 = 'matchThis'
         controller.register()
-        assert response.redirectedUrl == '/registration/registrationFailure'
+        assert response.redirectedUrl == '/registration/index'
     }
 
-    /*void test_RegisterBlankParams() {
-        params.username = ''
-        params.password = ''
-        params.password2 = ''
-        controller.register()
-        assert response.redirectedUrl == '/registration/registrationFailure'
-    }
-
-    void test_RegisterNullParams() {
-        params.username = null
-        params.password = null
-        params.password2 = null
-        controller.register()
-        assert response.redirectedUrl == '/registration/registrationFailure'
-    }*/
 }

@@ -10,6 +10,9 @@
   <g:if test="${flash.message}">
     <div class="message">${flash.message}</div>
   </g:if>
+  <g:if test="${flash.errors}">
+    <div class="exceptionMessage">${flash.errors}</div>
+  </g:if>
 <g:form action="signIn" class="form-signin">
 
     <div class="row-fluid">

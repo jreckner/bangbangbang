@@ -9,7 +9,7 @@ class RegistrationService {
         def user = userService.createLockedUser(username, password)
         if (user) {
             // TODO replace this link with gsp template for pretty email
-            def link = '<a href="' + baseUrl + 'registration/activate/' + user.userActivation.activationKey+ '">Click Here to activate your Board Games Central account.</a>'
+            def link = '<a href="' + baseUrl + 'registration/activate/' + user.userActivation.activationKey+ '?username=' + username + '">Click Here to activate your Board Games Central account.</a>'
             sendActivationEmail(username, user.userActivation.activationKey, link)
             return true
         }

@@ -86,7 +86,6 @@ coverage {
             "**/taglib/**",
             "**/twitter/bootstrap/scaffolding/**",
             "**/com/wireblend/DbRealm*",
-            "**/com/wireblend/SecurityFilters*",
-            "**/com/wireblend/AuthController*"
+            "**/com/wireblend/SecurityFilters*"
     ]
 }

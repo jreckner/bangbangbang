@@ -11,10 +11,8 @@ class RegistrationController {
     def index() {
         User user = new User()
         [user: user]
-    }
 
-    def activationComplete() {
-
+        return [ username: params.username, message: params.message ]
     }
 
     def activate = {
@@ -26,10 +24,9 @@ class RegistrationController {
 
             // Keep the username so that the
             // user doesn't have to enter it again.
-            // def m = [ username: params.username ]
+            def m = [ username: params.username, message: "useraccount is activated and unlocked." ]
             // Now redirect back to the login page.
-            // redirect(action: "activationComplete", params: m)
-            redirect(action: "activationComplete")
+            redirect(controller: "auth", action: "login", params: m)
         }
         else
         {
@@ -51,7 +48,7 @@ class RegistrationController {
         def user = userService.getUser(params.username)
         if (user) {
             flash.message = "User already exists with the username '${params.username}'"
-            redirect(action: "registrationFailure")
+            redirect(action: "index")
         }
         else {
             // User doesn't exist with username. Let's create one
@@ -59,7 +56,8 @@ class RegistrationController {
             // Make sure the passwords match
             if (params.password != params.password2) {
                 flash.message = "Passwords do not match"
-                redirect(action: "registrationFailure")
+                def m = [username: params.username]
+                redirect(action: "index", params: m)
             }
 
             // Passwords match. Let's attempt to save the user
@@ -77,7 +75,8 @@ class RegistrationController {
                 }
                 else {
                     // Now redirect back to the login page.
-                    redirect(action: "registrationFailure")
+                    flash.message = "Unexpected Registration Failure, please try again"
+                    redirect(action: "index")
                 }
             }
         }
