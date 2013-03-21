@@ -2,20 +2,28 @@ package com.wireblend
 
 import grails.test.ControllerUnitTestCase
 import grails.test.mixin.*
+import org.apache.shiro.SecurityUtils
 import org.apache.shiro.crypto.hash.Sha256Hash
+import org.apache.shiro.subject.Subject
 import org.junit.*
+
+import javax.swing.AbstractAction
 import java.net.URLEncoder
+
+import static org.easymock.EasyMock.createNiceMock
+import static org.easymock.EasyMock.expect
 
 /**
  * See the API for {@link grails.test.mixin.web.ControllerUnitTestMixin} for usage instructions
  */
 @TestFor(RegistrationController)
 @Mock([User,UserActivation])
-class RegistrationControllerTests{
+class RegistrationControllerTests extends AbstractShiroTest {
 
     def user
 
     void setUp() {
+
         user = new User(
                 username: 'test@gmail.com',
                 passwordHash: new Sha256Hash("Password1").toHex(),
@@ -41,7 +49,42 @@ class RegistrationControllerTests{
     }
 
     void test_IndexRedirect() {
+
+        //1.  Create a mock authenticated Subject instance for the test to run:
+        Subject subjectUnderTest = createNiceMock(Subject.class);
+        expect(subjectUnderTest.isAuthenticated()).andReturn(true);
+
+        //2. Bind the subject to the current thread:
+        setSubject(subjectUnderTest);
+
+        SecurityUtils.metaClass.'static'.getSubject = { ->
+            return [login: {}, isAuthenticated: { return true }, getPrincipal: { return user.username } ] as Subject
+        }
+
+        def mockedUserService = [
+                getUser: { username -> user }
+        ] as UserService
+        controller.userService = mockedUserService
+
         controller.index()
+        assert response.redirectedUrl == "/user/show/"+user.id
+    }
+
+    void test_IndexRedirectNotLoggedIn() {
+
+        //1.  Create a mock authenticated Subject instance for the test to run:
+        Subject subjectUnderTest = createNiceMock(Subject.class);
+        expect(subjectUnderTest.isAuthenticated()).andReturn(true);
+
+        //2. Bind the subject to the current thread:
+        setSubject(subjectUnderTest);
+
+        SecurityUtils.metaClass.'static'.getSubject = { ->
+            return [login: {}, isAuthenticated: { return false }, getPrincipal: { return null } ] as Subject
+        }
+
+        controller.index()
+        assert response.status == 200
     }
 
     void test_registrationCompleteRedirect() {

@@ -1,5 +1,7 @@
 package com.wireblend
 
+import org.apache.shiro.SecurityUtils
+
 class RegistrationController {
 
     def registrationService
@@ -9,8 +11,17 @@ class RegistrationController {
     static defaultAction = "index"
 
     def index() {
-        User user = new User()
-        [user: user]
+
+        def user
+        if(SecurityUtils.subject.isAuthenticated()) {
+            user = userService.getUser(SecurityUtils.subject.getPrincipal())
+            [user: user]
+            redirect(controller: "user", action: "show", id: user.id)
+        }
+        else {
+            user = new User()
+            [user: user]
+        }
 
         return [ username: params.username, message: params.message ]
     }
@@ -37,9 +48,6 @@ class RegistrationController {
     }
 
     def registrationComplete() {
-    }
-
-    def registrationFailure() {
     }
 
     def register() {

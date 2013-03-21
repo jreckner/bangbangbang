@@ -13,5 +13,6 @@ class AboutControllerTests {
 
     void testIndexRedirect() {
         controller.index()
+        assert response.status == 200
     }
 }
