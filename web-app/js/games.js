@@ -23,22 +23,22 @@ $( document ).ready(function() {
                 }));
               }
 
-//              console.log(data.boardGames.length);
               for(var i=0;i<data.boardGames.length;i++) {
-//                  console.log(data.boardGames[i].description);
-//                  $('#search-results').append($('<div>', {
-//                    text: data.boardGames[i].name + "----" + data.boardGames[i].description
-//                  }));
-
                   var source   = $("#entry-template").html();
                   var template = Handlebars.compile(source);
+
+                  var thumbnail = "http://localhost:8080/bangbangbang/static/images/shield.png";
+                  if(data.boardGames[i].thumbnail) {
+                      var thumbnail = data.boardGames[i].thumbnail;
+                  }
                   var context = {name: data.boardGames[i].name,
                       description: data.boardGames[i].description,
                       minPlayers: data.boardGames[i].minPlayers,
                       maxPlayers: data.boardGames[i].maxPlayers,
-                      thumbnail: data.boardGames[i].thumbnail,
+                      thumbnail: thumbnail,
                       yearPublished: data.boardGames[i].yearPublished,
-                      playingTime: data.boardGames[i].playingTime
+                      playingTime: data.boardGames[i].playingTime,
+                      objectId: data.boardGames[i].objectId
                   }
                   var html    = template(context);
                   $('#search-results').append(html);

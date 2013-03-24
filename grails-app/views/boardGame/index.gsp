@@ -14,11 +14,16 @@
                 <img src="{{thumbnail}}" alt="{{name}}" title="{{name}}" >
             </div>
           <div class="game-description">
+            Description:  (expand/collapse icon here) <br/>
             {{{description}}}
           </div>
           <div class="game-players">
               Players: {{minPlayers}} - {{maxPlayers}}, Play Time: {{playingTime}} minutes
           </div>
+          <div>
+              <button class="btn btn-primary" type="submit">I Own This</button>
+          </div>
+          <div><p>&nbsp;</p></div>
         </div>
     </script>
 </head>
@@ -39,12 +44,13 @@
                     <input type="checkbox" id="exactGameSearch" name="exactGameSearch" value="1" />Exact Search<br>
                     <button id="game-search-submit" class="btn btn-primary" type="submit">Search</button>
                 </div>
-                <div class="span2">
-                    <p>
-                        &nbsp;
-                    </p>
+            </div>
+
+            <div class="row-fluid">
+                <div class="span1">
+                    <p>&nbsp;</p>
                 </div>
-                <div class="span6">
+                <div class="span11">
                     <div id="search-results"></div>
                 </div>
             </div>
