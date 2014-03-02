@@ -53,27 +53,22 @@ grails.project.dependency.resolution = {
     }
 
     plugins {
-        runtime ":hibernate:$grailsVersion"
-//        runtime ":jquery:1.8.3"
+        runtime ":hibernate:3.6.10.8"
         runtime ":resources:1.1.6"
+	compile ":scaffolding:2.0.2"
 
-        // Uncomment these (or add new ones) to enable additional resources capabilities
-        //runtime ":zipped-resources:1.0"
-        //runtime ":cached-resources:1.0"
-        //runtime ":yui-minify-resources:0.1.4"
+        build ":tomcat:7.0.50.1"
 
-        build ":tomcat:$grailsVersion"
-
-        runtime ":database-migration:1.2.1"
+        runtime ":database-migration:1.3.8"
         runtime ':twitter-bootstrap:2.2.2'
         runtime ':fields:1.3'
 
         compile ':cache:1.0.1'
         compile ":shiro:1.1.4"
         compile ":lesscss-resources:1.3.1"
-        compile ":mongodb:1.2.0"
+        compile ":mongodb:1.3.3"
         compile ":mail:1.0.1"
-	    test ":code-coverage:1.2.5"
+	test ":code-coverage:1.2.5"
     }
 }
 

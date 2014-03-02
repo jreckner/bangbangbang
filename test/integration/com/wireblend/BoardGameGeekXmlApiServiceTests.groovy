@@ -17,7 +17,7 @@ class BoardGameGeekXmlApiServiceTests {
 
     void test_SearchBoardGameGeekDominion() {
         def boardGameDTOList = service.searchBoardGameGeek('Dominion')
-        assert boardGameDTOList.size().equals(27)
+        assert boardGameDTOList.size().equals(30)
     }
 
     void test_SearchBoardGameGeekExact() {
