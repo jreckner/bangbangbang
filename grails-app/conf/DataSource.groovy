@@ -26,9 +26,12 @@ environments {
     production {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:postgresql://localhost:5433/bangbangbang"
+            url = "jdbc:postgresql://localhost:5432/bangbangbang"
             username = "bang"
             password = "bangbangbang"
+            pooled = true
+            driverClassName = "org.postgresql.Driver"
+            dialect = org.hibernate.dialect.PostgreSQLDialect
         }
     }
 }

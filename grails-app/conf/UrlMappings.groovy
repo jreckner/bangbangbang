@@ -1,11 +1,11 @@
 class UrlMappings {
 
-	static mappings = {
-		"/$controller/$action?/$id?"{
-			constraints {
-				// apply constraints here
-			}
-		}
+    static mappings = {
+        "/$controller/$action?/$id?"{
+            constraints {
+                // apply constraints here
+            }
+        }
 
         // Clean URLs are Important
         "/about"(controller:"about", action: "index")
@@ -36,7 +36,7 @@ class UrlMappings {
             action = [GET: "getAllBoardGames"]
         }
 
-		"/"(view:"/index")
-		"500"(view:'/error')
-	}
+        "/"(view:"/index")
+        "500"(view:'/error')
+    }
 }

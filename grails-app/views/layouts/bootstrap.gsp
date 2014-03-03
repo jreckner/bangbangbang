@@ -54,7 +54,7 @@
                             <p class="navbar-text pull-right" id="loginInfo">
                                 <span style="padding: 10px 15px;">
                                     Logged in as
-                                    <a class="navbar-link" href="#"><shiro:principal/></a>
+                                    <a id="loginInfoAccountLink" class="navbar-link" href="#"><shiro:principal/></a>
                                 </span>
                                 <a class="navbar-link" href="${createLink(uri: '/auth/signOut')}">Sign out</a>
                             </p>
@@ -73,7 +73,7 @@
 						<ul class="nav">
 							<li<%= request.forwardURI == "${createLink(uri: '/')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/')}">Home</a></li>
                             <li<%= request.forwardURI == "${createLink(uri: '/games')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/games')}">Game Search</a></li>
-                            <li<%= request.forwardURI == "${createLink(uri: '/forums')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/')}">Forums</a></li>
+                            <li<%= request.forwardURI == "${createLink(uri: '/user/')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/')}">My Games</a></li>
                             <li<%= request.forwardURI == "${createLink(uri: '/about')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/about')}">About</a></li>
 						</ul>
 					</div>

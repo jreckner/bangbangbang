@@ -1,3 +1,4 @@
+<%@ page import="org.codehaus.groovy.grails.web.servlet.GrailsApplicationAttributes" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
@@ -7,21 +8,32 @@
     <script type="text/javascript" src="${resource(dir: 'js', file: 'games.js')}"></script>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'games.css')}" type="text/css">
 
-    <script id="entry-template" type="text/x-handlebars-template">
+    <script id="entry-template" type="text/x-handlebars-template" src="${resource(dir: 'js', file: 'games.js')}">
         <div class="entry">
           <h4>{{name}} ({{yearPublished}})</h4>
-            <div>
-                <img src="{{thumbnail}}" alt="{{name}}" title="{{name}}" >
-            </div>
-          <div class="game-description">
-            Description:  (expand/collapse icon here) <br/>
-            {{{description}}}
-          </div>
-          <div class="game-players">
-              Players: {{minPlayers}} - {{maxPlayers}}, Play Time: {{playingTime}} minutes
-          </div>
-          <div>
-              <button class="btn btn-primary" type="submit">I Own This</button>
+          <div style="width: 100%; overflow: hidden;">
+              <div style="width: 200px; float: left;">
+                  <img src="{{thumbnail}}" alt="{{name}}" title="{{name}}" >
+              </div>
+              <div style="margin-left: 220px;">
+                  <div>
+                      <br/><button class="btn btn-primary" type="submit" onclick="onIOwnThisClick('{{objectId}}', '<shiro:principal/>')">I Own This</button>
+                  </div>
+                  <div class="game-players">
+                      Players: {{minPlayers}} - {{maxPlayers}}, Play Time: {{playingTime}} minutes
+                  </div>
+                  <div class="game-description" onclick="onToggleDescription('{{objectId}}')">
+                      Description:
+                      <div id="game-description-hide-{{objectId}}">
+                          <img src="${g.resource( dir:'images', file:'down.png' ) }" width="32" height="32">
+                      </div>
+                      <div id="game-description-show-{{objectId}}" style="display:none;">
+                          <img src="${g.resource( dir:'images', file:'up.png' ) }" width="32" height="32">
+                          <br/>
+                          {{{description}}}
+                      </div>
+                  </div>
+              </div>
           </div>
           <div><p>&nbsp;</p></div>
         </div>
@@ -37,12 +49,11 @@
         <section id="main" class="span12">
 
             <div class="hero-unit">
-
                 <div class="span4">
                     <h2 class="form-signin-heading">Search for Games</h2>
                     <input type="text" id="gameSearch" name="gameSearch" class="input-block-level"  placeholder="Game to look up.."/>
-                    <input type="checkbox" id="exactGameSearch" name="exactGameSearch" value="1" />Exact Search<br>
                     <button id="game-search-submit" class="btn btn-primary" type="submit">Search</button>
+                    <input type="checkbox" id="exactGameSearch" name="exactGameSearch" value="1" />Exact Search
                 </div>
             </div>
 

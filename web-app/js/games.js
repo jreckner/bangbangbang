@@ -1,4 +1,5 @@
 $( document ).ready(function() {
+
     $('#game-search-submit').click(function() {
 
         $('#search-results').html('');
@@ -42,10 +43,26 @@ $( document ).ready(function() {
                   }
                   var html    = template(context);
                   $('#search-results').append(html);
-
               }
             }
         });
     });
 });
+
+function onIOwnThisClick(objectId, username) {
+    var urlPath = "/rest/1.0/boardgame/user/" + username + "/" + objectId;
+    $.ajax({
+        type: 'POST',
+        url: appContext + urlPath,
+        dataType: 'json',
+        success: function (data) {
+        }
+    });
+}
+
+function onToggleDescription(id) {
+    $("#game-description-hide-"+id).slideToggle('fast');
+    $("#game-description-show-"+id).slideToggle('fast');
+}
+
 

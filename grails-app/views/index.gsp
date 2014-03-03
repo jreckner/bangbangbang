@@ -51,7 +51,7 @@
 				</div>
 
 				<div class="row-fluid">
-					
+
 					<div class="span4" style="padding-left: 20px;">
 						<h2>Try It</h2>
 						<p>This demo app includes a couple of controllers to show off its features.</p>
@@ -72,16 +72,16 @@
                             </ul>
 						</p>
 					</div>
-					
+
 					<div class="span4">
 						<h2>Project Location</h2>
-						<p>You can find this project on <a href="https://github.com/msrust0/bangbangbang">GitHub</a>.</p>
+						<p>You can find this project on <a href="https://github.com/jreckner/bangbangbang">GitHub</a>.</p>
 					</div>
 
 				</div>
 
 			</section>
 		</div>
-		
+
 	</body>
 </html>
