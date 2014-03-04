@@ -34,15 +34,18 @@
 <div class="row-fluid">
     <section id="main" class="span12">
         <div class="hero-unit">
-            <div class="span4" style="background: url(images/shield.png) no-repeat;padding-left: 150px">
-                <h2 class="form-signin-heading">Import Game</h2>
-                <input type="text" id="gameImport" name="gameImport" class="input-block-level"  placeholder="BoardGameGeeks Url to Import..."/>
-                <form action="${createLink(uri: '/games')}">
-                    <span class="help-inline">
-                        <button id="game-import-submit" class="btn btn-primary" type="submit" disabled="true">Import</button>
-                        <input class="btn btn-primary" type="submit" value="Search">
-                    </span>
-                </form>
+            <div class="span8" style="background: url(images/shield.png) no-repeat;padding-left: 150px">
+                <h1>Game On.</h1>
+                <h3>Roll it, shuffle it, deal it.</h3>
+            </div>
+            <div class="span4">
+                <ul>
+                    <li style="list-style-type:none !important;"><i class="icon-th-list icon-white"></i>Track your games.</li>
+                    <li style="list-style-type:none !important;"><i class="icon-user icon-white"></i><strike>See what your buddies are playing.</strike></li>
+                    <li style="list-style-type:none !important;"><i class="icon-thumbs-up icon-white"></i><strike>Write and share reviews.</strike></li>
+                    <li style="list-style-type:none !important;"><i class="icon-search icon-white"></i><strike>Find a game in your area.</strike></li>
+                    <li style="list-style-type:none !important;"><i class="icon-comment icon-white"></i><strike>Join a game discussion.</strike></li>
+                </ul>
             </div>
         </div>
 

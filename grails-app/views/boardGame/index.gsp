@@ -55,6 +55,16 @@
                     <button id="game-search-submit" class="btn btn-primary" type="submit">Search</button>
                     <input type="checkbox" id="exactGameSearch" name="exactGameSearch" value="1" />Exact Search
                 </div>
+                <div class="span4"></div>
+                <div class="span4">
+                    <ul>
+                        <li style="list-style-type:none !important;"><i class="icon-th-list icon-white"></i>Track your games.</li>
+                        <li style="list-style-type:none !important;"><i class="icon-user icon-white"></i><strike>See what your buddies are playing.</strike></li>
+                        <li style="list-style-type:none !important;"><i class="icon-thumbs-up icon-white"></i><strike>Write and share reviews.</strike></li>
+                        <li style="list-style-type:none !important;"><i class="icon-search icon-white"></i><strike>Find a game in your area.</strike></li>
+                        <li style="list-style-type:none !important;"><i class="icon-comment icon-white"></i><strike>Join a game discussion.</strike></li>
+                    </ul>
+                </div>
             </div>
 
             <div class="row-fluid">

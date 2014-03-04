@@ -7,14 +7,10 @@ import spock.lang.Specification
  * See the API for {@link grails.test.mixin.web.ControllerUnitTestMixin} for usage instructions
  */
 @TestFor(CollectionController)
-class CollectionControllerSpec extends Specification {
+class CollectionControllerTests {
 
-    def setup() {
-    }
-
-    def cleanup() {
-    }
-
-    void "test something"() {
+    void testIndexRedirect() {
+        controller.index()
+        assert response.status == 200
     }
 }

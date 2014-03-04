@@ -36,15 +36,14 @@
                         %{--<img src="images/shield.png">--}%
                         <h1>Game On.</h1>
                         <h3>Roll it, shuffle it, deal it.</h3>
-
                     </div>
                     <div class="span4">
                         <ul>
                             <li style="list-style-type:none !important;"><i class="icon-th-list icon-white"></i>Track your games.</li>
-                            <li style="list-style-type:none !important;"><i class="icon-user icon-white"></i>See what your buddies are playing.</li>
-                            <li style="list-style-type:none !important;"><i class="icon-thumbs-up icon-white"></i>Write and share reviews.</li>
-                            <li style="list-style-type:none !important;"><i class="icon-search icon-white"></i>Find a game in your area.</li>
-                            <li style="list-style-type:none !important;"><i class="icon-comment icon-white"></i>Join a game discussion.</li>
+                            <li style="list-style-type:none !important;"><i class="icon-user icon-white"></i><strike>See what your buddies are playing.</strike></li>
+                            <li style="list-style-type:none !important;"><i class="icon-thumbs-up icon-white"></i><strike>Write and share reviews.</strike></li>
+                            <li style="list-style-type:none !important;"><i class="icon-search icon-white"></i><strike>Find a game in your area.</strike></li>
+                            <li style="list-style-type:none !important;"><i class="icon-comment icon-white"></i><strike>Join a game discussion.</strike></li>
                         </ul>
                     </div>
 

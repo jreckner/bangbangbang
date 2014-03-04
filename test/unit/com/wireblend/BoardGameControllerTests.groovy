@@ -159,4 +159,102 @@ class BoardGameControllerTests {
         assert json.iTotalRecords.equals(1)
         assert json.iTotalDisplayRecords.equals(1)
     }
+
+    void test_GetAllBoardGamesForUserFourPlayers() {
+        params.sEcho = 7
+        params.username = user.username
+        params.players = '4'
+        controller.getAllBoardGamesForUser()
+
+        def text = controller.response.contentAsString
+        def json = JSON.parse(text)
+
+        assert json.sEcho.equals(7)
+        assert json.iTotalRecords.equals(1)
+        assert json.iTotalDisplayRecords.equals(1)
+    }
+
+    void test_GetAllBoardGamesForUserOnePlayer() {
+        params.sEcho = 8
+        params.username = user.username
+        params.players = '1'
+        controller.getAllBoardGamesForUser()
+
+        def text = controller.response.contentAsString
+        def json = JSON.parse(text)
+
+        assert json.sEcho.equals(8)
+        assert json.iTotalRecords.equals(0)
+        assert json.iTotalDisplayRecords.equals(0)
+    }
+
+    void test_GetAllBoardGamesForUserTenPlayer() {
+        params.sEcho = 8
+        params.username = user.username
+        params.players = '10'
+        controller.getAllBoardGamesForUser()
+
+        def text = controller.response.contentAsString
+        def json = JSON.parse(text)
+
+        assert json.sEcho.equals(8)
+        assert json.iTotalRecords.equals(0)
+        assert json.iTotalDisplayRecords.equals(0)
+    }
+
+    void test_GetAllBoardGamesForUserInvalidAge() {
+        params.sEcho = 9
+        params.username = user.username
+        params.age = '5'
+        controller.getAllBoardGamesForUser()
+
+        def text = controller.response.contentAsString
+        def json = JSON.parse(text)
+
+        assert json.sEcho.equals(9)
+        assert json.iTotalRecords.equals(0)
+        assert json.iTotalDisplayRecords.equals(0)
+    }
+
+    void test_GetAllBoardGamesForUserValidAge() {
+        params.sEcho = 10
+        params.username = user.username
+        params.age = '22'
+        controller.getAllBoardGamesForUser()
+
+        def text = controller.response.contentAsString
+        def json = JSON.parse(text)
+
+        assert json.sEcho.equals(10)
+        assert json.iTotalRecords.equals(1)
+        assert json.iTotalDisplayRecords.equals(1)
+    }
+
+    void test_GetAllBoardGamesForUserTimeConsuming() {
+        params.sEcho = 11
+        params.username = user.username
+        params.playingTime = '120'
+        controller.getAllBoardGamesForUser()
+
+        def text = controller.response.contentAsString
+        def json = JSON.parse(text)
+
+        assert json.sEcho.equals(11)
+        assert json.iTotalRecords.equals(1)
+        assert json.iTotalDisplayRecords.equals(1)
+    }
+
+    void test_GetAllBoardGamesForUserLimitedTime() {
+        params.sEcho = 12
+        params.username = user.username
+        params.playingTime = '20'
+        controller.getAllBoardGamesForUser()
+
+        def text = controller.response.contentAsString
+        def json = JSON.parse(text)
+
+        assert json.sEcho.equals(12)
+        assert json.iTotalRecords.equals(0)
+        assert json.iTotalDisplayRecords.equals(0)
+    }
 }

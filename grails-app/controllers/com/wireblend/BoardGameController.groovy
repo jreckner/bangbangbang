@@ -39,6 +39,7 @@ class BoardGameController {
 
     def assignBoardGameToUser = {
         def boardGame = boardGameService.getGameDetails(params.objectId)
+        boardGame = boardGameService.createBoardGame(boardGame) // Transfer this DTO to the DB
         boardGameService.addToUserCollection(params.username, boardGame)
 
         // Should we return 201 and a link to this users games?
@@ -68,6 +69,31 @@ class BoardGameController {
 
     def getAllBoardGamesForUser = {
         def boardGames = userService.getUser(params.username).boardGames
+        if(params.players) {
+            def filteredBoardGames = []
+            boardGames.each() {
+                if((Integer.parseInt(params.players) >= it.minPlayers) && (Integer.parseInt(params.players) <= it.maxPlayers))
+                    filteredBoardGames.add(it)
+            }
+            boardGames = filteredBoardGames
+        }
+        if(params.age) {
+            def filteredBoardGames = []
+            boardGames.each() {
+                if(Integer.parseInt(params.age) >= it.age)
+                    filteredBoardGames.add(it)
+            }
+            boardGames = filteredBoardGames
+        }
+        if(params.playingTime) {
+            def filteredBoardGames = []
+            boardGames.each() {
+                if(Integer.parseInt(params.playingTime) >= it.playingTime)
+                    filteredBoardGames.add(it)
+            }
+            boardGames = filteredBoardGames
+        }
+        boardGames = boardGames.sort { it.name }
 
         HashMap jsonMap = new HashMap()
         jsonMap.put("sEcho", params.sEcho)

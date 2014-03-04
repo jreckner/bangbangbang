@@ -13,6 +13,27 @@ class BoardGameService {
         return searchGamesByName(searchKeyword, false)
     }
 
+    def createBoardGame(boardGameDTO) {
+        def boardGame = BoardGame.findByObjectId(boardGameDTO.objectId)
+        if (!boardGame) {
+            boardGame = new BoardGame(
+                    objectId: boardGameDTO.objectId,
+                    name: boardGameDTO.name,
+                    age: boardGameDTO.age,
+                    minPlayers: boardGameDTO.minPlayers,
+                    maxPlayers: boardGameDTO.maxPlayers,
+                    description: boardGameDTO.description,
+                    yearPublished: boardGameDTO.yearPublished,
+                    image: boardGameDTO.image,
+                    thumbnail: boardGameDTO.thumbnail,
+                    playingTime: boardGameDTO.playingTime
+            )
+            boardGame.validate()
+            boardGame.save()
+        }
+        return boardGame
+    }
+
     def searchGamesByName(searchKeyword, exact) {
         def boardGames = []
         def boardGameDTOList

@@ -57,20 +57,17 @@ class BoardGameGeekXmlApiService {
             primaryName = p.name[0].text()
         }
 
-        def boardGame = new BoardGame(
-                objectId: p.@objectid.text(),
-                name: primaryName,
-                age: Integer.parseInt(p.age.text()),
-                minPlayers: Integer.parseInt(p.minplayers.text()),
-                maxPlayers: Integer.parseInt(p.maxplayers.text()),
-                description: p.description.text(),
-                yearPublished: Integer.parseInt(p.yearpublished.text()),
-                image: p.image.text(),
-                thumbnail: p.thumbnail.text(),
-                playingTime: Integer.parseInt(p.playingtime.text())
-        )
-        boardGame.validate()
-        boardGame.save(failOnError: true, flush: true)
+        def boardGame = new BoardGameDTO()
+        boardGame.objectId = p.@objectid.text()
+        boardGame.name = primaryName
+        boardGame.age = Integer.parseInt(p.age.text())
+        boardGame.minPlayers = Integer.parseInt(p.minplayers.text())
+        boardGame.maxPlayers = Integer.parseInt(p.maxplayers.text())
+        boardGame.description = p.description.text()
+        boardGame.yearPublished = Integer.parseInt(p.yearpublished.text())
+        boardGame.image = p.image.text()
+        boardGame.thumbnail = p.thumbnail.text()
+        boardGame.playingTime = Integer.parseInt(p.playingtime.text())
         return boardGame
     }
 }
