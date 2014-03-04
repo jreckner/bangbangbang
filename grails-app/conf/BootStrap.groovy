@@ -19,6 +19,8 @@ class BootStrap {
         userRole.addToPermissions("about:*")
         userRole.addToPermissions("auth:*")
         userRole.addToPermissions("boardGame:*")
+        userRole.addToPermissions("collection:*")
+        userRole.addToPermissions("group:*")
         userRole.addToPermissions("registration:*")
         userRole.save(flush: true, failOnError: true)
 
@@ -34,18 +36,6 @@ class BootStrap {
         adminUser.addToRoles(adminRole)
                 .addToRoles(userRole)
                 .save(flush: true, failOnError: true)
-
-        // Create jon.reckner user
-        def jonUser = new User(username: "jon.reckner@gmail.com",
-                passwordHash: new Sha256Hash("R@nger90").toHex(),
-                locked: false)
-        jonUser.addToRoles(Role.findByName('ROLE_USER'))
-        jonUser.save(flush: true, failOnError: true)
-
-        // Add Permissions to show user
-        def user = User.findByUsername(jonUser.username)
-        user.addToPermissions("user:show,edit:"+user.id)
-        user.save(flush: true, failOnError: true)
 
     }
     def destroy = {

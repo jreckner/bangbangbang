@@ -51,6 +51,7 @@
 					<div class="nav-collapse collapse">
 
                         <shiro:authenticated>
+                            <div id="currentLoggedInUser" style="display:none;"><shiro:principal/></div>
                             <p class="navbar-text pull-right" id="loginInfo">
                                 <span style="padding: 10px 15px;">
                                     Logged in as
@@ -64,6 +65,7 @@
                                 <a class="navbar-link" href="${createLink(uri: '/registration')}">Register</a>
                             </p>
                             <form action="${createLink(uri: '/auth/signIn')}" class="form-signin navbar-form pull-right">
+                                <input type="hidden" name="targetUri" value="${targetUri}" />
                                 <input class="span2 top-login" type="text" name="username" placeholder="Email">
                                 <input class="span2 top-login" type="password" name="password" placeholder="Password">
                                 <button class="btn btn-primary" type="submit">Sign in</button>
@@ -73,7 +75,8 @@
 						<ul class="nav">
 							<li<%= request.forwardURI == "${createLink(uri: '/')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/')}">Home</a></li>
                             <li<%= request.forwardURI == "${createLink(uri: '/games')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/games')}">Game Search</a></li>
-                            <li<%= request.forwardURI == "${createLink(uri: '/user/')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/')}">My Games</a></li>
+                            <li<%= request.forwardURI == "${createLink(uri: '/collection')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/collection')}">My Collection</a></li>
+                            <li<%= request.forwardURI == "${createLink(uri: '/group')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/')}">My Groups</a></li>
                             <li<%= request.forwardURI == "${createLink(uri: '/about')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/about')}">About</a></li>
 						</ul>
 					</div>

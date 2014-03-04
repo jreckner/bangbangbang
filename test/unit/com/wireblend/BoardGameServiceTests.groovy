@@ -147,4 +147,21 @@ class BoardGameServiceTests {
         def boardGames = service.findAll()
         assert boardGames.size().equals(1)
     }
+
+    void test_createBoardGame() {
+        def boardGame = new BoardGameDTO()
+        boardGame.objectId = "123456789"
+        boardGame.name = 'primaryName'
+        boardGame.age = Integer.parseInt('21')
+        boardGame.minPlayers = Integer.parseInt('2')
+        boardGame.maxPlayers = Integer.parseInt('6')
+        boardGame.description = 'Long Description'
+        boardGame.yearPublished = Integer.parseInt('2014')
+        boardGame.image = 'imageUrl'
+        boardGame.thumbnail = 'thumbnailUrl'
+        boardGame.playingTime = Integer.parseInt('45')
+
+        service.createBoardGame(boardGame)
+        assert BoardGame.findByObjectId("123456789")
+    }
 }

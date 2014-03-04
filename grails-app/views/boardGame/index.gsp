@@ -49,11 +49,21 @@
         <section id="main" class="span12">
 
             <div class="hero-unit">
-                <div class="span4">
+                <div class="span4" style="background: url(images/shield.png) no-repeat;padding-left: 150px">
                     <h2 class="form-signin-heading">Search for Games</h2>
-                    <input type="text" id="gameSearch" name="gameSearch" class="input-block-level"  placeholder="Game to look up.."/>
+                    <input type="text" id="gameSearch" name="gameSearch" class="input-block-level"  placeholder="Game to look up..."/>
                     <button id="game-search-submit" class="btn btn-primary" type="submit">Search</button>
                     <input type="checkbox" id="exactGameSearch" name="exactGameSearch" value="1" />Exact Search
+                </div>
+                <div class="span4"></div>
+                <div class="span4">
+                    <ul>
+                        <li style="list-style-type:none !important;"><i class="icon-th-list icon-white"></i>Track your games.</li>
+                        <li style="list-style-type:none !important;"><i class="icon-user icon-white"></i><strike>See what your buddies are playing.</strike></li>
+                        <li style="list-style-type:none !important;"><i class="icon-thumbs-up icon-white"></i><strike>Write and share reviews.</strike></li>
+                        <li style="list-style-type:none !important;"><i class="icon-search icon-white"></i><strike>Find a game in your area.</strike></li>
+                        <li style="list-style-type:none !important;"><i class="icon-comment icon-white"></i><strike>Join a game discussion.</strike></li>
+                    </ul>
                 </div>
             </div>
 
@@ -62,6 +72,7 @@
                     <p>&nbsp;</p>
                 </div>
                 <div class="span11">
+                    <div id="search-loading"></div>
                     <div id="search-results"></div>
                 </div>
             </div>

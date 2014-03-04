@@ -57,22 +57,18 @@ grails.project.dependency.resolution = {
         runtime ":resources:1.1.6"
         compile ":scaffolding:2.0.2"
 
-        build ":tomcat:7.0.50.1"
+        if (!System.getProperty("noTomcat")) {
+            build ":tomcat:7.0.50.1"
+        }
 
         runtime ":database-migration:1.3.8"
         runtime ':twitter-bootstrap:2.2.2'
         runtime ':fields:1.3'
 
-        /*
-        compile (":postgresql-extensions:0.6.7") {
-            excludes "hibernate"
-        }
-        */
-
+        compile ":dto:0.2.4"
         compile ':cache:1.0.1'
         compile ":shiro:1.1.4"
         compile ":lesscss-resources:1.3.1"
-        // compile ":mongodb:1.3.3"
         compile ":mail:1.0.1"
         test ":code-coverage:1.2.5"
     }
@@ -87,6 +83,7 @@ coverage {
             "**/taglib/**",
             "**/twitter/bootstrap/scaffolding/**",
             "**/com/wireblend/DbRealm*",
-            "**/com/wireblend/SecurityFilters*"
+            "**/com/wireblend/SecurityFilters*",
+            "**/com/wireblend/AuthController*"
     ]
 }
