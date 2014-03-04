@@ -1,5 +1,11 @@
-$( document ).ready(function() {
+$( document ).ajaxStart(function() {
+    $( "#search-loading" ).show();
+});
+$( document ).ajaxStop(function() {
+    $( "#search-loading" ).hide();
+});
 
+$( document ).ready(function() {
     $('#game-search-submit').click(function() {
 
         $('#search-results').html('');
@@ -53,6 +59,7 @@ function onIOwnThisClick(objectId, username) {
     var urlPath = "/rest/1.0/boardgame/user/" + username + "/" + objectId;
     $.ajax({
         type: 'POST',
+        global: false, // Disable our global ajaxStart and ajaxStop functions.
         url: appContext + urlPath,
         dataType: 'json',
         success: function (data) {

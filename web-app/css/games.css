@@ -1,3 +1,17 @@
 .entry {
     border-bottom: 1px solid #4B792E;
 }
+
+#search-loading {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 0, 0, 0, 0.7 )
+    url('http://www.mytreedb.com/uploads/mytreedb/loader/ajax_loader_orange_128.gif')
+    50% 50%
+    no-repeat;
+}

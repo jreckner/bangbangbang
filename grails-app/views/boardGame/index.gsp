@@ -49,9 +49,9 @@
         <section id="main" class="span12">
 
             <div class="hero-unit">
-                <div class="span4">
+                <div class="span4" style="background: url(images/shield.png) no-repeat;padding-left: 150px">
                     <h2 class="form-signin-heading">Search for Games</h2>
-                    <input type="text" id="gameSearch" name="gameSearch" class="input-block-level"  placeholder="Game to look up.."/>
+                    <input type="text" id="gameSearch" name="gameSearch" class="input-block-level"  placeholder="Game to look up..."/>
                     <button id="game-search-submit" class="btn btn-primary" type="submit">Search</button>
                     <input type="checkbox" id="exactGameSearch" name="exactGameSearch" value="1" />Exact Search
                 </div>
@@ -62,6 +62,7 @@
                     <p>&nbsp;</p>
                 </div>
                 <div class="span11">
+                    <div id="search-loading"></div>
                     <div id="search-results"></div>
                 </div>
             </div>

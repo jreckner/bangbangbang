@@ -4,16 +4,13 @@ import grails.converters.JSON
 
 class BoardGameController {
 
+    def scaffold = BoardGame
+    static defaultAction = "list"
+
     def boardGameService
     def userService
 
-    def scaffold = BoardGame
-
-    def index() {
-
-    }
-
-    static defaultAction = "list"
+    def index() {}
 
     def searchBoardGames = {
         HashMap jsonMap = new HashMap()

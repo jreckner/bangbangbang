@@ -25,9 +25,11 @@
                     <input type="hidden" name="targetUri" value="${targetUri}" />
                     <input type="text" name="username" value="${username}" class="input-block-level"  placeholder="Username"/>
                     <input type="password" name="password" value="" class="input-block-level" placeholder="Password" />
+                    <!--
                     <label class="checkbox">
                         <g:checkBox name="rememberMe" value="${rememberMe}" /> Remember me
                     </label>
+                    -->
 
                     <button class="btn btn-primary" type="submit">Sign in</button>
                 </div>

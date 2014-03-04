@@ -13,6 +13,7 @@ class UrlMappings {
         "/registration/activate/$activationKey?"(controller: "registration", action: "activate")
 
         "/games"(controller:"boardGame", action: "index")
+        "/collection"(controller:"collection", action: "index")
 
         // REST API
         "/rest/1.0/boardgame/user/$username?/$objectId?" {
